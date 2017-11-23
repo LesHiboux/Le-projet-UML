@@ -88,14 +88,146 @@ public class Joueur
 		this.id=id;
 		this.posX=x;
 		this.posY=y;
-		this.nbJoueur += 1;
+		this.nbJoueur+=1;
 	}
 
 	//------------Fonctions--------//
-	public void deplacer(int choix)
+	public boolean deplacer(int choix)
 	{
 		//choix = 1, 2, 3, 4, 6, 7, 8, 9
 		//bas-gauche, bas, bas-droite, gauche, droite, haut-gauche, haut, haut-droite
+
+		//retourne true si le déplacement est fait, false sinon
+		
+		//int choix;
+
+		//System.out.println("Sélectionnez une dirrection")
+
+		switch(choix)
+		{
+			case 1:
+			{
+				if(posX-1<0 || posY+1>11)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX-1;
+					posY=posY+1;
+					return true;
+				}
+			}
+
+			case 2:
+			{
+				if(posY+1>11)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posY=posY+1;
+					return true;
+				}
+
+			}
+
+			case 3:
+			{
+				if(posX+1>11 || posY+1>11)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX+1;
+					posY=posY+1;
+					return true;
+				}
+			}
+
+			case 4:
+			{
+				if(posX-1 < 0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX-1;
+					return true;
+				}
+			}
+
+			case 6:
+			{
+				if(posX+1 > 11)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX+1;
+					return true;
+				}
+			}
+
+			case 7:
+			{
+				if(posX-1 <0 || posY-1 <0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX = posX-1;
+					posY=posY-1;
+					return true;
+				}
+			}
+
+			case 8:
+			{
+				if(posY-1 < 0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posY=posY-1;
+					return true;
+				}
+			}
+
+			case 9:
+			{
+				if(posX+1>11 || posY-1<0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX+1;
+					posY=posY-1;
+					return true;
+				}
+			}
+
+			default:
+			{
+				System.out.println("erreur de saisie");
+				return false;
+			}
+		}
 	}
 
 }
