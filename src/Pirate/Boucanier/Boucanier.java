@@ -1,1 +1,3 @@
-sqfdgshg
+public class Boucanier extends Pirate {
+
+}
