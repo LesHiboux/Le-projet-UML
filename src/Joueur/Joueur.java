@@ -1,3 +1,5 @@
+
+
 public class Joueur
 {
 	private int posX;
@@ -8,6 +10,135 @@ public class Joueur
 	private boolean armure;
 	private static int nbJoueur;
 	
+
+//---------Constructeur---------//
+	public Joueur(int id, int x, int y)
+	{
+		this.idJoueur=id;
+		this.posX=x;
+		this.posY=y;
+		this.pelle=false;
+		this.mousquet=false;
+		this.armure=false;
+		this.nbJoueur+=1;
+		return;
+	}
+
+	public Joueur(String strJoueur) throws JoueurException
+	{
+		System.out.println(strJoueur);
+		int compt=0;
+		int pos=0;
+		int posSuiv=0;
+		String info="";
+		while (compt<6)
+		{
+			
+			pos=posSuiv;
+			posSuiv=strJoueur.indexOf("|", pos+1);
+			if (posSuiv==-1)
+			{
+				throw new JoueurException("Erreur de construction", this);
+			}
+			System.out.println("ici : posX=" + pos + " posY=" + posSuiv);
+			if(compt==0)
+			{
+				info=strJoueur.substring(pos, posSuiv);
+			}
+			else
+			{
+				info=strJoueur.substring(pos+1, posSuiv);
+			}
+			System.out.println("info= " + info);
+			switch(compt)
+			{
+				case 0:
+				{
+					
+					try
+					{
+						idJoueur=Integer.parseInt(info);
+					}
+					catch(NumberFormatException e)
+					{
+						throw new JoueurException("Erreur de construction", this);
+					}
+					compt++;
+					break;
+				}
+				case 1:
+				{
+					try
+					{
+						posX=Integer.parseInt(info);
+					}
+					catch(NumberFormatException e)
+					{
+						throw new JoueurException("Erreur de construction", this);
+					}
+					compt++;
+					break;
+				}
+				case 2:
+				{
+					try
+					{
+						posY=Integer.parseInt(info);
+					}
+					catch(NumberFormatException e)
+					{
+						throw new JoueurException("Erreur de construction", this);
+					}
+					compt++;
+					break;
+				}
+				case 3:
+				{
+					if(info.equals("false")==false && info.equals("true")==false)
+					{
+						System.out.println("la");
+						throw new JoueurException("Erreur de construction", this);
+					}
+					pelle=Boolean.valueOf(info);
+					compt++;
+					break;
+				}
+				case 4:
+				{
+					if(info.equals("false")==false && info.equals("true")==false)
+					{
+						throw new JoueurException("Erreur de construction", this);
+					}
+					mousquet=Boolean.valueOf(info);
+					compt++;
+					break;
+				}
+				case 5:
+				{
+					if(info.equals("false")==false && info.equals("true")==false)
+					{
+						throw new JoueurException("Erreur de construction", this);
+					}
+					armure=Boolean.valueOf(info);
+					compt++;
+					break;
+				}
+			}
+		}
+		nbJoueur++;
+	}
+
+	public void display()
+	{
+		System.out.println(idJoueur + "|" + posX + "|" + posY + "|" + String.valueOf(pelle) + "|" + String.valueOf(mousquet) + "|" + String.valueOf(armure) + "|");
+	}
+
+	public String toString()
+	{
+		return idJoueur + "|" + posX + "|" + posY + "|" + String.valueOf(pelle) + "|" + String.valueOf(mousquet) + "|" + String.valueOf(armure) + "|";
+	}
+
+
 	//------------Get--------//
 	public int getPosX()
 	{
@@ -45,6 +176,7 @@ public class Joueur
 	}
 
 
+
 	//------------Set--------//
 	public void setPosX(int x)
 	{
@@ -80,15 +212,6 @@ public class Joueur
 	{
 		this.armure = a;
 		return;
-	}
-
-	//---------Constructeur---------//
-	public void Joueur(int id, int x, int y)
-	{
-		this.id=id;
-		this.posX=x;
-		this.posY=y;
-		this.nbJoueur+=1;
 	}
 
 	//------------Fonctions--------//
