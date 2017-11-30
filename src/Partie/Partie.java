@@ -6,8 +6,6 @@ public class Partie;
 {
 
 	//Attributs
-
-	private Carte carte;
 	
 	private LinkedList<Joueur> fileJoueurs;
 	private int nbJoueurs;
@@ -22,6 +20,12 @@ public class Partie;
 	private int tresorposY;
 
 	//Fonctions
+	
+	public Partie()
+	{
+		//je te construis//
+	}
+	
 	public boolean sauvegarde()
 	{
 		String name;
