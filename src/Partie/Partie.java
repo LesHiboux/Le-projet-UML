@@ -2,7 +2,7 @@
 import java.util.Scanner;
 import java.io.File;
 
-public class Partie;
+public class Partie implements Affichage;
 {
 
 	//Attributs
