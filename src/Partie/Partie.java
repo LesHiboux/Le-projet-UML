@@ -40,4 +40,25 @@ public class Partie implements Affichage;
 			dossierSave.mkdirs();
 		}
 	}
+	
+	public void afficherAccueil()
+	{
+		System.out.println("Welcome to :");
+		System.out.println("TRESURE HUNTER");
+	}
+
+	public void afficherCarte(LinkedList fileJoueurs, LinkedList filePirates, LinkedList fileCoffres)
+	{
+		char carte[][] = new char[12][12];
+		int nbJoueur = fileJoueurs.size();
+		int nbPirate = filePirates.size();
+		int nbCoffre = fileCoffres.size();
+		
+		/*for (i -> size)
+			recup joueur/pirate/coffre 
+			recup coord -> mettre dans carte
+		faire pour chaque file
+		
+		afficher le tout*/
+	}
 }
