@@ -23,7 +23,7 @@ public class Partie implements Affichage;
 	
 	public Partie()
 	{
-		//je te construis//
+		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
 	}
 	
 	public boolean sauvegarde()
