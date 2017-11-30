@@ -1,1 +1,3 @@
-qsrgdsfh
+public class Flibustier extends Pirate {
+
+}
