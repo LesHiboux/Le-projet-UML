@@ -2,30 +2,30 @@
 public class Pair
   {
 
-    private int left;
-    private int right;
+    private int x;
+    private int y;
 
-    public Pair(int left, int right)
+    public Pair(int x, int y)
     {
-      this.left = left;
-      this.right = right;
+      this.x = x;
+      this.y = y;
     }
 
-    public int getLeft()
+    public int getX()
     {
-      return left;
+      return x;
     }
 
-    public int getRight()
+    public int gety()
     {
-      return right;
+      return y;
     }
 
     public boolean equality(Object o)
     {
       if (!(o instanceof Pair)) return false;
       Pair pairo = (Pair) o;
-      return this.left.equality(pairo.getLeft()) && this.right.equality(pairo.getRight());
+      return this.x.equality(pairo.getX()) && this.y.equality(pairo.getY());
     }
 
 }
