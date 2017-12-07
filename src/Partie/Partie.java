@@ -25,11 +25,122 @@ public class Partie implements Affichage;
 	public Partie()
 	{
 		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
-		askJoueur=0;
-		while (askJoueur<1)
+		
+		//Inputs
+		Scanner saisie = new Scanner(System.in);
+		string askJoueur = "0";
+		while (askJoueur < "1")
 		{
 			System.out.println("combien de joueur ?");
+			askJoueur = saisie.readLine();			
 		}
+		string askPirate = "-1";
+		while (askPirate < "0")
+		{
+			System.out.println("combien de pirate ?");
+			askPirate = saisie.readLine();			
+		}
+		this.nbJoueurs = Integer.parseInt(askJoueur);
+		this.nbPirates = Integer.parseInt(askPirate);
+		
+		//Coords generator
+		ArrayList<Pair> coords = new ArrayList<Pair>();
+		Pair nul = new Pair(-1, -1);
+		coords.add(nul);
+			//Players
+		while (askJoueur != 0)
+		{
+			int nx = -1, int ny = -1;
+			Pair ncoord = new Pair(nx, ny);
+			while (ncoord.inside(coords))
+			{
+				Random jet= new Random();
+				int nx = jet.nextInt(11);
+				int ny = jet.nextInt(11);
+				ncoord = new Pair(nx, ny);
+
+			}
+			Joueur nJoueur = new Joueur(askJoueur, ncoord.getX(), ncoord.getY());
+			coords.add(ncoord);
+			fileJoueurs.addFirst(nJoueur);
+			askJoueur = askJoueur-1;
+		}
+			//Pirates
+		while (askPirate != 0)
+		{
+			int nx = -1, int ny = -1;
+			Pair ncoord = new Pair(nx, ny);
+			while (ncoord.inside(coords))
+			{
+				Random jet= new Random();
+				int nx = jet.nextInt(11);
+				int ny = jet.nextInt(11);
+				ncoord = new Pair(nx, ny);
+
+			}
+			Random FouB = new Random();
+			int yolo = FouB.nextInt(1);
+			switch (yolo)
+			{
+				case 0:
+				{
+					Pirate nPirate = new Boucanier(ncoord.getX(), ncoord.getY());
+					coords.add(ncoord);
+					filePirate.addFirst(nPirate);
+
+				}
+				case 1:
+				{
+					Pirate nPirate = new Flibustier(ncoord.getX(), ncoord.getY());
+					coords.add(ncoord);
+					filePirate.addFirst(nPirate);
+
+				}
+			}
+			askPirate = askPirate-1;
+		}
+			//Chests
+		
+		for (j=0; j<nbJoueurs; j++)
+		{
+			for (c=0; c<3; c++)
+			{
+				int nx = -1, int ny = -1;
+				Pair ncoord = new Pair(nx, ny);
+				while (ncoord.inside(coords))
+				{
+					Random jet= new Random();
+					int nx = jet.nextInt(11);
+					int ny = jet.nextInt(11);
+					ncoord = new Pair(nx, ny);
+
+				}
+				
+				if (c==0)
+				{
+					Coffre nCoffre = new Coffre(ncoord.getX(), ncoord.getY(), True, False, False);
+					coords.add(ncoord);
+					fileCoffres.addFirst(nCoffre);
+				}
+				else if (c==1)
+				{
+					Coffre nCoffre = new Coffre(ncoord.getX(), ncoord.getY(), False, True, False);
+					coords.add(ncoord);
+					fileCoffres.addFirst(nCoffre);
+				}
+				else if (c==2)
+				{
+					Coffre nCoffre = new Coffre(ncoord.getX(), ncoord.getY(), False, False, True);
+					coords.add(ncoord);
+					fileCoffres.addFirst(nCoffre);
+				}
+			}
+		}
+			//Treasure
+		Random jet= new Random();
+		int tresorPosX = jet.nextInt(11);
+		int tresorPosy = jet.nextInt(11);
+		
 	}
 
 	public boolean charger()
