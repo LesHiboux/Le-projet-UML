@@ -25,11 +25,24 @@ public class Partie implements Affichage;
 	public Partie()
 	{
 		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
-		askJoueur=0;
-		while (askJoueur<1)
+		Scanner saisie = new Scanner(System.in);
+		string askJoueur = "0";
+		while (askJoueur < "1")
 		{
 			System.out.println("combien de joueur ?");
+			askJoueur = saisie.readLine();			
 		}
+		string askPirate = "-1";
+		while (askPirate < "0")
+		{
+			System.out.println("combien de pirate ?");
+			askPirate = saisie.readLine();			
+		}
+		this.nbJoueurs = Integer.parseInt(askJoueur);
+		this.nbPirates = Integer.parseInt(askPirate);
+		
+		Map<Integer, String> hm = new HashMap<>();
+		
 	}
 
 	public boolean charger()
