@@ -1,10 +1,12 @@
 
-public class Pair<L,R> {
+public class Pair<L,R>
+  {
 
   private int L left;
   private int R right;
 
-  public Pair(int left, int right) {
+  public Pair(int left, int right)
+  {
     this.left = left;
     this.right = right;
   }
