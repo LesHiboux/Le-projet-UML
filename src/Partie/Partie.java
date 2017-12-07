@@ -25,6 +25,11 @@ public class Partie implements Affichage;
 	public Partie()
 	{
 		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
+		askJoueur=0;
+		while (askJoueur<1)
+		{
+			System.out.println("combien de joueur ?");
+		}
 	}
 
 	public boolean charger()
