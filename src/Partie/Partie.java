@@ -41,7 +41,7 @@ public class Partie implements Affichage;
 		this.nbJoueurs = Integer.parseInt(askJoueur);
 		this.nbPirates = Integer.parseInt(askPirate);
 		
-		Map<Integer, String> hm = new HashMap<>();
+		 ArrayList<Pair> coords = new ArrayList<Pair>();
 		
 	}
 
