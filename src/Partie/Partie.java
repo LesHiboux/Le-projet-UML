@@ -26,6 +26,12 @@ public class Partie implements Affichage;
 	{
 		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
 	}
+
+	public boolean charger()
+	{
+		
+	}
+
 	public boolean sauvegarde()
 	{
 
@@ -51,7 +57,7 @@ public class Partie implements Affichage;
 			creer=fJoueur.creatNewFile();
 			fJoueur.close();
 		}
-		catch(IEException e)
+		catch(IOException e)
 		{
 			System.out.println("erreur");
 		}
@@ -74,7 +80,7 @@ public class Partie implements Affichage;
 			creer=fPirate.creatNewFile();
 			fPirate.close();
 		}
-		catch(IEException e)
+		catch(IOException e)
 		{
 			System.out.println("erreur");
 		}
@@ -95,7 +101,7 @@ public class Partie implements Affichage;
 			creer=fCoffre.creatNewFile();
 			fCoffre.close();
 		}
-		catch(IEException e)
+		catch(IOException e)
 		{
 			System.out.println("erreur");
 		}
@@ -116,7 +122,7 @@ public class Partie implements Affichage;
 			creer=fTresor.creatNewFile();
 			fCoffre.close();
 		}
-		catch(IEException e)
+		catch(IOException e)
 		{
 			System.out.println("erreur");
 		}
