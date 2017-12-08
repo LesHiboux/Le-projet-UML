@@ -422,7 +422,7 @@ public class Joueur
 			if((this.posX == pPosX-1 && this.posY == pPosY-1) || (this.posX == pPosX && this.posY == pPosY-1) || (this.posX == pPosX+1 && this.posY == pPosY-1) || (this.posX == pPosX-1 && this.posY == pPosY) || (this.posX==pPosX && this.posY==pPosY) || (this.posX == pPosX+1 && this.posY == pPosY) || (this.posX == pPosX-1 && this.posY == pPosY+1) || (this.posX == pPosX && this.posY == pPosY+1) || (this.posX == pPosX+1 && this.posY == pPosY+1))
 			{
 				Random x=new Random();		//Génération d'un nombre aléatoire
-				int jet=x.nextInt(10)+1;	//entre 1 et 10
+				int jet=x.nextInt(11)+1;	//entre 1(inclu) et 10 -> 11(exclu)
 				//Si le pirate est proche du joueur
 				if(pirateCourant instanceof Boucanier)
 				{
@@ -522,3 +522,4 @@ public class Joueur
 	}
 
 }
+
