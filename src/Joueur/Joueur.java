@@ -522,5 +522,3 @@ public class Joueur
 	}
 
 }
-
-// XENOBLADE CHRONICLES
