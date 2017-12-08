@@ -67,9 +67,22 @@ public class Pirate {
 
 	abstract public String toString();
 
+	public boolean estAdjacent(int posX, int posY, int posX2, int posY2) { //fonction qui renvoie true si les coordonées (posX,posY) sont adjacente aux coordonées (posX2,posY2)
+			if (posX==posX2) {
+				if (posY==posY2+1 || posY2-1) return true;
+			}
+			if (posY==posY2) {
+				if (posX==posX+1 || posX-1) return true;
+			}
+			if (posX==posX2-1 || posX==posX2+1) {
+				if(posY==posY-1 || posY==posY+1) return true;
+			}
+			return false;
+		}	
+	}
 public void deplacer() {
 	Random x = new Random();
-	int direction = x.nextInt(8)+1;
+	int direction = x.nextInt(9)+1;
 	int posx2;
 	int posy2;
 	boolean valide = false;
