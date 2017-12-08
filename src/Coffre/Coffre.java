@@ -7,6 +7,18 @@ public class Coffre
 	private boolean armure;
 	private static int nbCoffre;
 
+
+	//--------------Costructeurs--------------//
+	public Coffre(int x, int y, boolean p, boolean m, boolean a)
+	{
+		this.posX=x;
+		this.posY=y;
+		this.pelle=p;
+		this.mousquet=m;
+		this.armure=a;
+		nbCoffre++;
+	}
+
 	public Coffre(String strCoffre) throws CoffreException
 	{
 		int compt=0;
@@ -90,10 +102,78 @@ public class Coffre
 				}
 			}
 		}
+		nbCoffre++;
 	}
 
+
+	//------Get-----//
+	public int getPosX()
+	{
+		return posX;
+	}
+
+	public int getPosY()
+	{
+		return posY;
+	}
+
+	public boolean getPelle()
+	{
+		return pelle;
+	}
+
+	public boolean getMousquet()
+	{
+		return mousquet;
+	}
+
+	public boolean getArmure()
+	{
+		return armure;
+	}
+
+
+	//--------------Set-------------//
+	public void setPosX(int x)
+	{
+		this.posX=x;
+	}
+
+	public void setPosY(int y)
+	{
+		this.posY=y;
+	}
+
+	public void setPelle(boolean p)
+	{
+		this.pelle=p;
+	}
+
+	public void setMousquet(boolean m)
+	{
+		this.mousquet=m;
+	}
+
+	public void setArmure(boolean a)
+	{
+		this.armure=a;
+	}
+
+
+	//--------------Fonctions------------//
 	public String toString()
 	{
 		return posX + "|" + posY + "|" + String.valueOf(pelle) + "|" + String.valueOf(mousquet) + "|" + String.valueOf(armure) + "|";
+	}
+
+	public boolean vide()
+	{
+		//Retourne true si le coffre est vide
+		//false sinon
+		if(pelle==false && mousquet==false && armure==false)
+		{
+			return true;
+		}
+		return false;
 	}
 }
