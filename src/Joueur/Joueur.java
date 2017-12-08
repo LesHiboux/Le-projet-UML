@@ -1,4 +1,6 @@
 
+import java.util.LinkedList;
+import java.util.Random;
 
 public class Joueur
 {
@@ -96,7 +98,6 @@ public class Joueur
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
-						System.out.println("la");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					pelle=Boolean.valueOf(info);
@@ -353,4 +354,173 @@ public class Joueur
 		}
 	}
 
+	public void ouvrirCoffre(LinkedList<Coffre> &listeCoffres)
+	{
+		Coffre coffreCourant;
+		int cposX, cposY;
+		boolean cPelle, cArmure, cMousquet;
+		for(int i=0; i<listeCoffres.size(); i++)
+		{
+			coffreCourant=listeCoffres.get(i);
+			cPosX=coffreCourant.getPosX();
+			cPosY=coffreCourant.getPosY();
+			System.out.println(coffreCourant.toString());
+			if(this.posX==cposX && this.posY==cposY)
+			{
+				//On regarde le contenu du coffre que si il est sur le même case que le joueur
+				cPelle=coffreCourant.getPelle();
+				cArmure=coffreCourant.getArmure();
+				cMousquet=coffreCourant.getMousquet();
+				if(cPelle && !this.pelle)
+				{
+					//Si le coffre contiend une pelle, et que le joueur n'en as pas:
+					this.pelle=cPelle;
+					coffreCourant.setPelle(false);
+				}
+				if(cMousquet && !this.mousquet)
+				{
+					//Si le coffre contiend un mousquet, et que le joueur n'en as pas:
+					this.mousquet=cMousquet;
+					coffreCourant.setMousquet(false);
+				}
+				if(cArmure && !this.armure)
+				{
+					//Si le coffre contiend une armure, et que le joueur n'en as pas:
+					this.armure=cArmure;
+					coffreCourant.setArmure(false);
+				}
+
+				if(coffreCourant.vide()==true)
+				{
+					//Si le coffre est vide, on l'enlève de la liste de coffres
+					listeCoffres.remove(i);
+					return;
+				}
+				else if(coffreCourant.vide()==false)
+				{
+					//Si le coffre n'est pas vide
+						//On enlève le coffre de la liste, 
+						//Puis on rajoute le coffreCourant qui a été moifié précedement
+					listeCoffres.remove(i);
+					listeCoffres.add(coffreCourant);
+					return;
+				}
+			}
+		}
+	}
+	
+	public boolean combat(LinkedList<Pirate> filePirates)	//Return true si vivant, false si joueur mort
+	{
+		Pirate pirateCourant;
+		int pPosX, pPosY;
+		for(int i=0; i<filePirates.size(); i++)
+		{
+			//On récupère les infos du pirate à la position i dans la liste
+			pirateCourant=filePirates.get(i);
+			pPosX=pirateCourant.getposX();
+			pPosY=pirateCourant.getPosY();
+			if((this.posX == pPosX-1 && this.posY == pPosY-1) || (this.posX == pPosX && this.posY == pPosY-1) || (this.posX == pPosX+1 && this.posY == pPosY-1) || (this.posX == pPosX-1 && this.posY == pPosY) || (this.posX==pPosX && this.posY==pPosY) || (this.posX == pPosX+1 && this.posY == pPosY) || (this.posX == pPosX-1 && this.posY == pPosY+1) || (this.posX == pPosX && this.posY == pPosY+1) || (this.posX == pPosX+1 && this.posY == pPosY+1))
+			{
+				Random x=new Random();		//Génération d'un nombre aléatoire
+				int jet=x.nextInt(10)+1;	//entre 1 et 10
+				//Si le pirate est proche du joueur
+				if(pirateCourant instanceof Boucanier)
+				{
+					//Combat avec un boucanier
+					if(this.mousquet)
+					{
+						//Si le joueur a le mousquet combat
+						if(this.armure)
+						{
+							//Si le perso a l'armure et le mousquet, il gagne -> pirate mort, joueur vivant
+							//Affiche joueur a tué le boucanier
+							filePirates.remove(i);
+						}
+						else
+						{
+							//Si le joueur a seulement le mousquet: 50% de chance de tuer le pirate
+							if(jet<=5)
+							{
+								//Affiche joueur a tué le boucanier
+								filePirates.remove(i);
+							}
+							else
+							{
+								//Affiche joueur décapité par boucanier
+								return false;
+							}
+						}
+					}
+					else
+					{
+						//Si le joueur n'as pas le mousquet, combat seulement si ils sont sur la meme case
+						if(this.posX==pPosX && this.posY==pPosY)
+						{
+							if(this.armure==false)
+							{
+								//Si le joueur n'as pas de mousquet et d'armure, il est mort...
+								//Affiche joueur décapité par boucanier
+								return false;
+							}
+							else
+							{
+								//Si le joueur n'as pas de mousquet mais une armure, il a 10% de chances de mourir7
+								if(jet==10)
+								{
+									//Affiche joueur décapité par boucanier
+									return false;
+								}
+								//Affiche joueur a survécu au boucanier
+							}
+						}
+					}
+				}
+				else if(pirateCourant instanceof Flibustier)
+				{
+					//Si le pirate est un flibustier combat
+					if(this.mousquet == false && this.armure==false)
+					{
+						//Si le joueur n'as ni le mousquet ni l'armure, il est mort
+						//Affiche joueur tué par le flibustier
+						return false;
+					}
+					else if(this.mousquet==false && this.armure==true)
+					{
+						//Si le joueur n'as que l'armure, il a 10% de chances de mourir
+						if(jet==10)
+						{
+							//Affiche joueur tué par le flibustier
+							return false;
+						}
+						//Affiche joueur a survécu au flibustier
+					}
+					else if(this.mousquet==true && this.armure==false)
+					{
+						//Si le joueur n'as que le mousquet, il a 50% de chances de tuer le pirate
+						if(jet<=5)
+						{
+							//Affiche joueur a tué le flibustier
+							filePirates.remove(i);
+						}
+						else
+						{
+							//Affiche joueur tué par le flibustier
+							return false;
+						}
+					}
+					else if(this.mousquet==true && this.armure==true)
+					{
+						//Si le joueur a l'armure et le mousquet il gagne
+						//Affiche joueur a tué le flibustier
+						filePirates.remove(i);
+					}
+				}
+			}
+		}
+		//Le joueur a survécu à toutes les attaques de pirates.
+		return true;
+	}
+
 }
+
+// XENOBLADE CHRONICLES
