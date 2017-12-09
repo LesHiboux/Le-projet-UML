@@ -25,6 +25,9 @@ public class Partie implements Affichage;
 	public Partie()
 	{
 		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
+		this.fileJoueurs =new LinkedList<Joueur>();
+		this.filePirates =new LinkedList<Pirate>(); 
+		this.fileCoffres =new LinkedList<Coffre>(); 
 		
 		//Inputs
 		Scanner saisie = new Scanner(System.in);
@@ -138,8 +141,8 @@ public class Partie implements Affichage;
 		}
 			//Treasure
 		Random jet= new Random();
-		int tresorPosX = jet.nextInt(11);
-		int tresorPosy = jet.nextInt(11);
+		this.tresorPosX = jet.nextInt(11);
+		this.tresorPosy = jet.nextInt(11);
 		
 	}
 
@@ -250,22 +253,28 @@ public class Partie implements Affichage;
 
 	public void afficherAccueil()
 	{
-		System.out.println("Welcome to :");
-		System.out.println("TRESURE HUNTER");
+		System.out.println("           Welcome to:            ");
+		System.out.println("----------TRESURE HUNTER----------");
+		System.out.println("*** Type 1 to start a new game ***");
+		System.out.println("*** Type 2 to load an old game ***");
+		System.out.println("******** Type q/Q to quit ********");
+		System.out.println("----------------------------------");
+		
 	}
 
 	public void afficherCarte(LinkedList fileJoueurs, LinkedList filePirates, LinkedList fileCoffres)
 	{
 		char carte[][] = new char[12][12];
-		int nbJoueur = fileJoueurs.size();
-		int nbPirate = filePirates.size();
-		int nbCoffre = fileCoffres.size();
-		
-		/*for (i -> size)
-			recup joueur/pirate/coffre 
-			recup coord -> mettre dans carte
-		faire pour chaque file
-		
-		afficher le tout*/
-}
+		int id;
+		int xx;
+		int yy;
+		for (int j = nbJoueurs; j!=0; j++)
+		{
+			Joueur temp = fileJoueurs.get(j-1);
+			xx = temp.getX();
+			yy = temp.getY();
+			id = temp.getId();
+			carte[xx][yy] = 
+		}
+	}
 }
