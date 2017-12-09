@@ -264,17 +264,56 @@ public class Partie implements Affichage;
 
 	public void afficherCarte(LinkedList fileJoueurs, LinkedList filePirates, LinkedList fileCoffres)
 	{
+		//generation de la carte a afficher
 		char carte[][] = new char[12][12];
 		int id;
 		int xx;
 		int yy;
-		for (int j = nbJoueurs; j!=0; j++)
+		
+		for (int c = nbCoffres; c!=0; c--)
+		{
+			Coffre temp = fileCoffres.get(p-1);
+			xx = temp.getX();
+			yy = temp.getY();
+			carte[xx][yy] = "C";
+		}
+		
+		for (int p = nbPirates; p!=0; p--)
+		{
+			Pirate temp = filePirates.get(p-1);
+			xx = temp.getX();
+			yy = temp.getY();
+			if (temp instanceof Boucanier) id = "B";
+			else id = "F";
+			carte[xx][yy] = id;
+		}
+		
+		for (int j = nbJoueurs; j!=0; j--)
 		{
 			Joueur temp = fileJoueurs.get(j-1);
 			xx = temp.getX();
 			yy = temp.getY();
-			id = temp.getId();
-			carte[xx][yy] = 
+			id =  Character.forDigit(temp.getId(), 10);
+			carte[xx][yy] = id;
 		}
+		
+		for (int x=0; x<12; x++)
+		{
+			for (int y=0; y<12; y++)
+			{
+				if (carte[x][y] == "") carte[x][y] = "+";
+			}
+		}
+		//affichage
+		System.out.println("----------Carte----------");
+		for (int x=0; x<12; x++)
+		{
+			for (int y=0; y<12; y++)
+			{
+				System.out.print(carte[x][y]);
+			}
+			System.out.println();
+		}
+		System.out.println("-------------------------");
 	}
 }
