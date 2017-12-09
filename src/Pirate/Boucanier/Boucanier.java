@@ -12,31 +12,31 @@ public class Boucanier extends Pirate {
 		return "2|" + posX + "|" + posY + "|";
 	}
 
-	public boolean combat(LinkedList<Joueur> fileJoueurs, Joueur i) {//déroulé du combat
+	public boolean combat(LinkedList<Joueur> fileJoueurs, Joueur j) {//déroulé du combat
 		Random x = new Random();
 		int jet = x.nextInt(10)+1;
-		//affiche le joueur i est attaqué par un boucanier
-		if (j.getArmure()==1) {
-			if (j.getMousquet()==1) {
-				//affiche le joueur i tue le boucanier
+		//affiche le joueur j est attaqué par un boucanier
+		if (j.getArmure()==true) {
+			if (j.getMousquet()==true) {
+				//affiche le joueur j tue le boucanier
 				return false;
 			}
 			if (jet==10) {
-				//affiche le joueur i est décapité par le boucanier
-				fileJoueurs.remove(i);
+				//affiche le joueur j est décapité par le boucanier
+				fileJoueurs.remove(j);
 				return true;
 			}
-			//le joueur i survit
+			//le joueur j survit
 			return true;
 		}
-		if (j.getMousquet()==1) {
+		if (j.getMousquet()==true) {
 			if (jet<=5) {
-				//affiche le joueur i tue le boucanier
+				//affiche le joueur j tue le boucanier
 				return false;
 			}
 		}
-		//le joueur i est décapité par le boucanier
-		fileJoueurs.remove(i);
+		//le joueur j est décapité par le boucanier
+		fileJoueurs.remove(j);
 		return true;
 	}
 
@@ -45,10 +45,10 @@ public class Boucanier extends Pirate {
 		for (int i=0;i<=fileJoueurs.size();i++) {
 			j=fileJoueurs.get(i);
 			if (j.getPosX()==this.posX && j.getPosY==this.posY) {
-				if (combat(fileJoueurs,i)==false) return false; 
+				if (combat(fileJoueurs,j)==false) return false; 
 			}
 			else {
-				if(i.getMousquet()==true) {
+				if(j.getMousquet()==true) {
 					if (estAdjacent(j.getPosX(),j.getPosY(),this.posX,this.posY)==true) {
 						if (combat(fileJoueurs,j)==false) return false;
 					}
