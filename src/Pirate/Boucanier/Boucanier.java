@@ -45,7 +45,7 @@ public class Boucanier extends Pirate {
 		for (int i=0;i<=fileJoueurs.size();i++) {
 			j=fileJoueurs.get(i);
 			if (j.getPosX()==this.posX && j.getPosY==this.posY) {
-				if (combat(fileJoueurs,i)==false) return false; 
+				if (combat(fileJoueurs,j)==false) return false; 
 			}
 			else {
 				if(i.getMousquet()==true) {
