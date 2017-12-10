@@ -66,66 +66,83 @@ public class Pirate {
 	}
 
 	abstract public String toString();
+	
+	public int getPosX() {
+		return this.posX;
+	}
+
+	public int getPosY() {
+		return this.posY;
+	}
+	
+	public void setPosX(int x) {
+		this.posX=x;
+		return;
+	}
+	
+	public void setPosY(int y) {
+		this.posY=y;
+		return;
+	}
 
 	public boolean estAdjacent(int posX, int posY, int posX2, int posY2) { //fonction qui renvoie true si les coordonées (posX,posY) sont adjacente aux coordonées (posX2,posY2)
-			if (posX==posX2) {
-				if (posY==posY2+1 || posY2-1) return true;
+		if (posX==posX2) {
+			if (posY==posY2+1 || posY2-1) return true;
+		}
+		if (posY==posY2) {
+			if (posX==posX+1 || posX-1) return true;
+		}
+		if (posX==posX2-1 || posX==posX2+1) {
+			if(posY==posY-1 || posY==posY+1) return true;
+		}
+		return false;
+	}	
+	public void deplacer() {
+		Random x = new Random();
+		int direction = x.nextInt(9)+1;
+		int posx2;
+		int posy2;
+		boolean valide = false;
+		//deplacement aleatoire
+		while (valide == false) {
+			valid==true;
+			switch(direction) {
+				case 1: posx2=posx+1;
+					posy2=posy-1;
+				case 2:
+					posx2=posx+1;
+				case 3:
+					posx2=posx+1;
+					posy2=posy+1;
+				case 4:
+					posy2=posy-1;
+				case 5:
+					valide=false;
+				case 6:
+					posy2=posy+1;
+				case 7:
+					posx2=posx-1;
+					posy2=posy-1;
+				case 8:
+					posx2=posx-1;
+				case 9:
+					posx2=posx-1;
+					posy2=posy+1;
+
 			}
-			if (posY==posY2) {
-				if (posX==posX+1 || posX-1) return true;
-			}
-			if (posX==posX2-1 || posX==posX2+1) {
-				if(posY==posY-1 || posY==posY+1) return true;
-			}
-			return false;
-		}	
-	}
-public void deplacer() {
-	Random x = new Random();
-	int direction = x.nextInt(9)+1;
-	int posx2;
-	int posy2;
-	boolean valide = false;
-	//deplacement aleatoire
-	while (valide == false) {
-		valid==true;
-		switch(direction) {
-			case 1: posx2=posx+1;
-				posy2=posy-1;
-			case 2:
-				posx2=posx+1;
-			case 3:
-				posx2=posx+1;
-				posy2=posy+1;
-			case 4:
-				posy2=posy-1;
-			case 5:
+			//vérification direction non hors map
+			if (posx2>=12 || posx2<0 || posy2>=12 || posy2<0) { 
 				valide=false;
-			case 6:
-				posy2=posy+1;
-			case 7:
-				posx2=posx-1;
-				posy2=posy-1;
-			case 8:
-				posx2=posx-1;
-			case 9:
-				posx2=posx-1;
-				posy2=posy+1;
-
+				posx2=posx:
+				posy2=posy;
+			}
 		}
-		//vérification direction non hors map
-		if (posx2>=12 || posx2<0 || posy2>=12 || posy2<0) { 
-			valide=false;
-			posx2=posx:
-			posy2=posy;
-		}
+		//changement coordonées
+		posx=pox2;
+		posy=posy2;	  
 	}
-	//changement coordonées
-	posx=pox2;
-	posy=posy2;	  
-}
 
-public void attaquer() {
+	public void attaquer() {
 
 	}
 }
