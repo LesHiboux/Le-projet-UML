@@ -21,11 +21,13 @@ public class Pair
       return y;
     }
 
-    public boolean equality(Object o)
+    public boolean inside(Arraylist arr)
     {
-      if (!(o instanceof Pair)) return false;
-      Pair pairo = (Pair) o;
-      return this.x.equality(pairo.getX()) && this.y.equality(pairo.getY());
+       for (int i=0; i<arr.size(); i++)
+       {
+          if (this.x == arr[i].getX() && this.y == arr[i].getY()) return True;
+       }
+       return False;
     }
 
 }
