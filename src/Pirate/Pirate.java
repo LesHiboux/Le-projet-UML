@@ -100,46 +100,46 @@ public class Pirate {
 	public void deplacer() {
 		Random x = new Random();
 		int direction = x.nextInt(9)+1;
-		int posx2;
-		int posy2;
+		int posX2;
+		int posY2;
 		boolean valide = false;
 		//deplacement aleatoire
 		while (valide == false) {
 			valid==true;
 			switch(direction) {
-				case 1: posx2=posx+1;
-					posy2=posy-1;
+				case 1: posX2=posX+1;
+					posY2=posY-1;
 				case 2:
-					posx2=posx+1;
+					posX2=posX+1;
 				case 3:
-					posx2=posx+1;
-					posy2=posy+1;
+					posX2=posX+1;
+					posY2=posY+1;
 				case 4:
-					posy2=posy-1;
+					posY2=posY-1;
 				case 5:
 					valide=false;
 				case 6:
-					posy2=posy+1;
+					posY2=posY+1;
 				case 7:
-					posx2=posx-1;
-					posy2=posy-1;
+					posX2=posX-1;
+					posY2=posY-1;
 				case 8:
-					posx2=posx-1;
+					posX2=posX-1;
 				case 9:
-					posx2=posx-1;
-					posy2=posy+1;
+					posX2=posX-1;
+					posY2=posY+1;
 
 			}
 			//vérification direction non hors map
-			if (posx2>=12 || posx2<0 || posy2>=12 || posy2<0) { 
+			if (posX2>=12 || posX2<0 || posY2>=12 || posY2<0) { 
 				valide=false;
-				posx2=posx:
-				posy2=posy;
+				posX2=posX:
+				posY2=posY;
 			}
 		}
 		//changement coordonées
-		posx=pox2;
-		posy=posy2;	  
+		posX=pox2;
+		posY=posY2;	  
 	}
 
 	public void attaquer() {
