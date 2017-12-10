@@ -15,7 +15,7 @@ public class Pirate {
 		{
 			pos=posSuiv;
 			posSuiv=strPirate.indexOf("|", pos+1);
-			if (posSuiv==-1
+			if (posSuiv==-1)
 			{
 				throw new JoueurException("Erreur de construction", this);
 			}
