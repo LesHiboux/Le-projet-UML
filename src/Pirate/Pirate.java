@@ -1,12 +1,13 @@
 import java.util.Random;
-import java.util.*;
-
 public class Pirate {
-	protected int posX;
-	protected int posY;
-	private static int nbPirate;
+	private int posX;
+	private int posY;
 
-
+	public Pirate (int x, int y) {
+		posX=x;
+		posY=y;
+	}
+	
 	public Pirate(String strPirate)
 	{
 		System.out.println(strPirate);
@@ -20,7 +21,7 @@ public class Pirate {
 			posSuiv=strPirate.indexOf("|", pos+1);
 			if (posSuiv==-1)
 			{
-				throw new PirateException("Erreur de construction", this);
+				throw new JoueurException("Erreur de construction", this);
 			}
 			if(compt==0)
 			{
@@ -65,88 +66,84 @@ public class Pirate {
 				}
 			}
 		}
-		nbPirate++;
 	}
 
-
-//abstract public String toString();
+	abstract public String toString();
 	
-public int getPosX() {
-	return this.posX;
-}
-
-public int getPosY() {
-	return this.posY;
-}
-
-public void setPosX(int x) {
-	this.posX=x;
-	return;
-}
-
-public void setPosY(int y) {
-	this.posY=y;
-	return;
-}
-
-public boolean estAdjacent(int posX, int posY, int posX2, int posY2) { //fonction qui renvoie true si les coordonées (posX,posY) sont adjacente aux coordonées (posX2,posY2)
-	if (posX==posX2) {
-		if (posY==posY2+1 || posY2-1) return true;
+	public int getPosX() {
+		return this.posX;
 	}
-	if (posY==posY2) {
-		if (posX==posX+1 || posX-1) return true;
+
+	public int getPosY() {
+		return this.posY;
 	}
-	if (posX==posX2-1 || posX==posX2+1) {
-		if(posY==posY-1 || posY==posY+1) return true;
+	
+	public void setPosX(int x) {
+		this.posX=x;
+		return;
 	}
-	return false;
-}	
-public void deplacer() {
-	Random x = new Random();
-	int direction = x.nextInt(9)+1;
-	int posX2;
-	int posY2;
-	boolean valide = false;
-	//deplacement aleatoire
-	while (valide == false) {
-		valide=true;
-		switch(direction) {
-			case 1: posX2=posX+1;
-				posY2=posY-1;
-			case 2:
-				posX2=posX+1;
-			case 3:
-				posX2=posX+1;
-				posY2=posY+1;
-			case 4:
-				posY2=posY-1;
-			case 5:
+	
+	public void setPosY(int y) {
+		this.posY=y;
+		return;
+	}
+
+	public boolean estAdjacent(int posX, int posY, int posX2, int posY2) { //fonction qui renvoie true si les coordonées (posX,posY) sont adjacente aux coordonées (posX2,posY2)
+		if (posX==posX2) {
+			if (posY==posY2+1 || posY==posY2-1) return true;
+		}
+		if (posY==posY2) {
+			if (posX==posX+1 || posX==posX-1) return true;
+		}
+		if (posX==posX2-1 || posX==posX2+1) {
+			if(posY==posY-1 || posY==posY+1) return true;
+		}
+		return false;
+	}	
+	public void deplacer() {
+		int posX2;
+		int posY2;
+		boolean valide = false;
+		//deplacement aleatoire
+		while (valide == false) {
+			valid==true;
+			Random x = new Random();
+			int direction = x.nextInt(9)+1;
+			switch(direction) {
+				case 1: posX2=posX+1;
+					posY2=posY-1;
+				case 2:
+					posX2=posX+1;
+				case 3:
+					posX2=posX+1;
+					posY2=posY+1;
+				case 4:
+					posY2=posY-1;
+				case 5:
+					valide=false;
+				case 6:
+					posY2=posY+1;
+				case 7:
+					posX2=posX-1;
+					posY2=posY-1;
+				case 8:
+					posX2=posX-1;
+				case 9:
+					posX2=posX-1;
+					posY2=posY+1;
+
+			}
+			//vérification direction non hors map
+			if (posX2>=12 || posX2<0 || posY2>=12 || posY2<0) { 
 				valide=false;
-			case 6:
-				posY2=posY+1;
-			case 7:
-				posX2=posX-1;
-				posY2=posY-1;
-			case 8:
-				posX2=posX-1;
-			case 9:
-				posX2=posX-1;
-				posY2=posY+1;
-
+				posX2=posX:
+				posY2=posY;
+			}
 		}
-		//vérification direction non hors map
-		if (posX2>=12 || posX2<0 || posY2>=12 || posY2<0) { 
-			valide=false;
-			posX2=posX;
-			posY2=posY;
-		}
+		//changement coordonées
+		posX=posX2;
+		posY=posY2;	  
 	}
-	//changement coordonées
-	posX=posX2;
-	posY=posY2;	  
-}
 
-public boolean attaquer(LinkedList<Joueur> fileJoueur) {
-
-	}
+	abstract public void attaquer();
 }

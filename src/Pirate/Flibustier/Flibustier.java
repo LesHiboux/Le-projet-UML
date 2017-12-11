@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Flibustier extends Pirate {
 
 	public Flibustier(String strFlib)
@@ -7,6 +5,10 @@ public class Flibustier extends Pirate {
 		super(strFlib);
 	}
 
+	public Flibustier(int x, int y) {
+		super(x,y);
+	}
+	
 	public String toString()
 	{
 		return "1|" + posX + "|" + posY + "|";
@@ -15,33 +17,33 @@ public class Flibustier extends Pirate {
 	public boolean combat(LinkedList<Joueur> fileJoueurs, Joueur j) {//déroulé du combat
 		Random x = new Random();
 		int jet = x.nextInt(10)+1;
-		System.out.println("le joueur "+j.getIdJoueur()+"est attaqué par un flibustier");
+		System.out.println("le joueur "+j.getIdJoueur()+"est attaqué par un flibustier")
 		if (j.getArmure()==true) {
 			if (j.getMousquet()==true) {
-				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier");
+				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier")
 				return false;
 			}
 			if (jet==10) {
-				System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier");
-				fileJoueurs.remove(j);
+				System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier")
+				fileJoueurs.remove(i);
 				return true;
 			}
-			System.out.println("le joueur "+j.getIdJoueur()+"survit");
+			System.out.println("le joueur "+j.getIdJoueur()+"survit")
 			return true;
 		}
-		if (j.getMousquet()==true) {
+		if (j.getMousquet()==1) {
 			if (jet<=5) {
-				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier");
+				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier")
 				return false;
 			}
 		}
-		System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier");
+		System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier")
 		fileJoueurs.remove(j);
 		return true;
 	}
 	
 	public boolean attaquer(LinkedList<Joueur> fileJoueurs) {
-		Joueur j;
+		joueur j;
 		for (int i=0;i<=fileJoueurs.size();i++) {
 			j=fileJoueurs.get(i);
 		}
