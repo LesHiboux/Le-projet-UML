@@ -3,9 +3,12 @@ public class Flibustier extends Pirate {
 	public Flibustier(String strFlib)
 	{
 		super(strFlib);
-		nbFlib++;
 	}
 
+	public Flibustier(int x, int y) {
+		super(x,y);
+	}
+	
 	public String toString()
 	{
 		return "1|" + posX + "|" + posY + "|";
@@ -35,7 +38,7 @@ public class Flibustier extends Pirate {
 			}
 		}
 		System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier")
-		fileJoueurs.remove(i);
+		fileJoueurs.remove(j);
 		return true;
 	}
 	
@@ -44,8 +47,8 @@ public class Flibustier extends Pirate {
 		for (int i=0;i<=fileJoueurs.size();i++) {
 			j=fileJoueurs.get(i);
 		}
-		if (j.getPosX()==this.posX && j.getPosY==this.posY) {
-				if (combat(fileJoueurs,i)==false) return false; 
+		if (j.getPosX()==this.posX && j.getPosY()==this.posY) {
+				if (combat(fileJoueurs,j)==false) return false; 
 			}
 			else {
 				if (estAdjacent(j.getPosX(),j.getPosY(),this.posX,this.posY)==true) {
