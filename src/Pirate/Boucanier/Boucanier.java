@@ -1,12 +1,15 @@
 import java.util.LinkedList;
 import java.util.Random;
 public class Boucanier extends Pirate {
-	Boucanier(String strBouc)
+	public Boucanier(String strBouc)
 	{
 		super(strBouc);
-		nbBouc++;
 	}
 
+	public Boucanier(int x, int y) {
+		super(x,y);
+	}
+	
 	public String toString()
 	{
 		return "2|" + posX + "|" + posY + "|";
