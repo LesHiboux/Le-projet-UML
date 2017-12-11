@@ -1,6 +1,6 @@
-
-import java.util.LinkedList;
+import java.util.*;
 import java.util.Random;
+
 
 public class Joueur
 {
@@ -354,10 +354,11 @@ public class Joueur
 		}
 	}
 
-	public void ouvrirCoffre(LinkedList<Coffre> &listeCoffres)
+	public void ouvrirCoffre(LinkedList<Coffre> listeCoffres)
 	{
+		System.out.println("Liste Coffres");
 		Coffre coffreCourant;
-		int cposX, cposY;
+		int cPosX, cPosY;
 		boolean cPelle, cArmure, cMousquet;
 		for(int i=0; i<listeCoffres.size(); i++)
 		{
@@ -365,29 +366,32 @@ public class Joueur
 			cPosX=coffreCourant.getPosX();
 			cPosY=coffreCourant.getPosY();
 			System.out.println(coffreCourant.toString());
-			if(this.posX==cposX && this.posY==cposY)
+			if(this.posX==cPosX && this.posY==cPosY)
 			{
 				//On regarde le contenu du coffre que si il est sur le même case que le joueur
 				cPelle=coffreCourant.getPelle();
 				cArmure=coffreCourant.getArmure();
 				cMousquet=coffreCourant.getMousquet();
-				if(cPelle && !this.pelle)
+				if(cPelle && this.pelle==false)
 				{
 					//Si le coffre contiend une pelle, et que le joueur n'en as pas:
 					this.pelle=cPelle;
 					coffreCourant.setPelle(false);
+					System.out.println("récup pelle");
 				}
-				if(cMousquet && !this.mousquet)
+				if(cMousquet && this.mousquet==false)
 				{
 					//Si le coffre contiend un mousquet, et que le joueur n'en as pas:
 					this.mousquet=cMousquet;
 					coffreCourant.setMousquet(false);
+					System.out.println("récup mousquet");
 				}
-				if(cArmure && !this.armure)
+				if(cArmure && this.armure==false)
 				{
 					//Si le coffre contiend une armure, et que le joueur n'en as pas:
 					this.armure=cArmure;
 					coffreCourant.setArmure(false);
+					System.out.println("récup armure");
 				}
 
 				if(coffreCourant.vide()==true)
@@ -417,12 +421,12 @@ public class Joueur
 		{
 			//On récupère les infos du pirate à la position i dans la liste
 			pirateCourant=filePirates.get(i);
-			pPosX=pirateCourant.getposX();
+			pPosX=pirateCourant.getPosX();
 			pPosY=pirateCourant.getPosY();
 			if((this.posX == pPosX-1 && this.posY == pPosY-1) || (this.posX == pPosX && this.posY == pPosY-1) || (this.posX == pPosX+1 && this.posY == pPosY-1) || (this.posX == pPosX-1 && this.posY == pPosY) || (this.posX==pPosX && this.posY==pPosY) || (this.posX == pPosX+1 && this.posY == pPosY) || (this.posX == pPosX-1 && this.posY == pPosY+1) || (this.posX == pPosX && this.posY == pPosY+1) || (this.posX == pPosX+1 && this.posY == pPosY+1))
 			{
 				Random x=new Random();		//Génération d'un nombre aléatoire
-				int jet=x.nextInt(11)+1;	//entre 1(inclu) et 10 -> 11(exclu)
+				int jet=x.nextInt(10)+1;	//entre 1(inclu) et 10 -> 11(exclu)
 				//Si le pirate est proche du joueur
 				if(pirateCourant instanceof Boucanier)
 				{
