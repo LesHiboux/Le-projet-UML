@@ -38,8 +38,8 @@ public class Partie implements Affichage
 			System.out.println("combien de joueur ?");
 			askJoueur = Integer.parseInt(saisie.nextLine());			
 		}
-		String askPirate = "-1";
-		while (askPirate < "0")	//Mauvaise vérif...
+		int askPirate = -1;
+		while (askPirate < 0)	//Mauvaise vérif...
 		{
 			System.out.println("combien de pirate ?");
 			askPirate = Integer.parseInt(saisie.nextLine());			
