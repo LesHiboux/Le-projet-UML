@@ -26,7 +26,7 @@ public class Pair
     {
        for (int i=0; i<arr.size(); i++)
        {
-          if (this.x == arr[i].getX() && this.y == arr[i].getY()) return true;
+          if (this.x == (arr.get(i)).getX() && this.y == (arr.get(i)).getY()) return true;
        }
        return false;
     }
