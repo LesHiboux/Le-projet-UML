@@ -31,20 +31,20 @@ public class Partie implements Affichage;
 		
 		//Inputs
 		Scanner saisie = new Scanner(System.in);
-		string askJoueur = "0";
-		while (askJoueur < "1")
+		int askJoueur = 0;
+		while (askJoueur < 1)
 		{
 			System.out.println("combien de joueur ?");
-			askJoueur = saisie.readLine();			
+			askJoueur = Integer.parseInt(saisie.readLine());			
 		}
-		string askPirate = "-1";
-		while (askPirate < "0")
+		int askPirate = -1;
+		while (askPirate < 0)
 		{
 			System.out.println("combien de pirate ?");
-			askPirate = saisie.readLine();			
+			askPirate = Integer.parseInt(saisie.readLine());			
 		}
-		this.nbJoueurs = Integer.parseInt(askJoueur);
-		this.nbPirates = Integer.parseInt(askPirate);
+		this.nbJoueurs = askJoueur;
+		this.nbPirates = askPirate;
 		
 		//Coords generator
 		ArrayList<Pair> coords = new ArrayList<Pair>();
