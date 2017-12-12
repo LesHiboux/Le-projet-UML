@@ -1,0 +1,3 @@
+Bourrer toutes les classes dans un même dossier
+javac tresureHunter.java;
+java tresureHunter;
