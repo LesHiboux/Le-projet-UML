@@ -1,0 +1,2 @@
+mrproper : 
+	rm -f *.class
