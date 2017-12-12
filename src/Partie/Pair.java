@@ -27,7 +27,7 @@ public class Pair
       Pair comp;
        for (int i=0; i<arr.size(); i++)
        {
-         comp = arr.get(i)
+         comp = arr.get(i);
           if (this.x == comp.getX() && this.y == comp.getY()) return true;
        }
        return false;
