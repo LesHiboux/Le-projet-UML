@@ -52,7 +52,7 @@ public class Coffre
 					}
 					catch(NumberFormatException e)
 					{
-						throw new JoueurException("Erreur de construction", this);
+						throw new CoffreException("Erreur de construction", this);
 					}
 					compt++;
 					break;
@@ -65,7 +65,7 @@ public class Coffre
 					}
 					catch(NumberFormatException e)
 					{
-						throw new JoueurException("Erreur de construction", this);
+						throw new CoffreException("Erreur de construction", this);
 					}
 					compt++;
 					break;
@@ -74,7 +74,7 @@ public class Coffre
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
-						throw new JoueurException("Erreur de construction", this);
+						throw new CoffreException("Erreur de construction", this);
 					}
 					pelle=Boolean.valueOf(info);
 					compt++;
@@ -84,7 +84,7 @@ public class Coffre
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
-						throw new JoueurException("Erreur de construction", this);
+						throw new CoffreException("Erreur de construction", this);
 					}
 					mousquet=Boolean.valueOf(info);
 					compt++;
@@ -94,7 +94,7 @@ public class Coffre
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
-						throw new JoueurException("Erreur de construction", this);
+						throw new CoffreException("Erreur de construction", this);
 					}
 					armure=Boolean.valueOf(info);
 					compt++;
