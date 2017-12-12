@@ -24,9 +24,11 @@ public class Pair
 
     public boolean inside(ArrayList arr)
     {
+      Pair comp;
        for (int i=0; i<arr.size(); i++)
        {
-          if (this.x == (arr.get(i)).getX() && this.y == (arr.get(i)).getY()) return true;
+         comp = arr.get(i)
+          if (this.x == comp.getX() && this.y == comp.getY()) return true;
        }
        return false;
     }
