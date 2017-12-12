@@ -32,20 +32,20 @@ public class Partie implements Affichage
 		
 		//Inputs
 		Scanner saisie = new Scanner(System.in);
-		String askJoueur = "0";
-		while (askJoueur < "1")		//Mauvaise vérif...
+		int askJoueur = 0;
+		while (askJoueur < 1)		//Mauvaise vérif...
 		{
 			System.out.println("combien de joueur ?");
-			askJoueur = saisie.nextLine();			
+			askJoueur = Integer.parseInt(saisie.nextLine());			
 		}
 		String askPirate = "-1";
 		while (askPirate < "0")	//Mauvaise vérif...
 		{
 			System.out.println("combien de pirate ?");
-			askPirate = saisie.nextLine();			
+			askPirate = Integer.parseInt(saisie.nextLine());			
 		}
-		this.nbJoueurs = Integer.parseInt(askJoueur);
-		this.nbPirates = Integer.parseInt(askPirate);
+		this.nbJoueurs = askJoueur;
+		this.nbPirates = askPirate;
 		
 		//Coords generator
 		ArrayList<Pair> coords = new ArrayList<Pair>();
@@ -409,7 +409,18 @@ public boolean charger()
 	public void afficherCarte(LinkedList fileJoueurs, LinkedList filePirates, LinkedList fileCoffres)
 	{
 		//generation de la carte a afficher
-		char carte[][] = new char[12][12];
+		char carte[][] = { {"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"},
+				{"+","+","+","+","+","+","+","+","+","+","+","+"}};
 		int id;
 		int xx;
 		int yy;
@@ -441,13 +452,6 @@ public boolean charger()
 			carte[xx][yy] = id;
 		}
 		
-		for (int x=0; x<12; x++)
-		{
-			for (int y=0; y<12; y++)
-			{
-				if (carte[x][y] == '') carte[x][y] = '+';
-			}
-		}
 		//affichage
 		System.out.println("----------Carte----------");
 		for (int x=0; x<12; x++)
