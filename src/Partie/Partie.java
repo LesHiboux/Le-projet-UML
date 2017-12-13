@@ -18,14 +18,13 @@ public class Partie
 	private Flibustier flibCourant;
 	private Boucanier boucCourant;
 	
-
 	private LinkedList<Coffre> listeCoffres;
 	private int nbCoffres;
 
 	private int tresorPosX;
 	private int tresorPosY;
 
-	private int n=12;
+	private int nMap=12;
 
 	//Fonctions
 	public Partie()
@@ -417,21 +416,18 @@ public class Partie
 	public void afficherCarte()
 	{
 		//generation de la carte a afficher
-		char carte[][] = { {'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'} };
+		char carte[nMap][nMap];
 		char id;
 		int xx;
 		int yy;
+		
+		for (int row=0; row<nMap; row++)
+		{
+			for (int col=0; col<nMap; col++)
+			{
+				carte[row][col]='+';
+			}
+		}
 		
 		for (int c = listeCoffres.size()-1; c>=0; c--)
 		{
@@ -466,9 +462,9 @@ public class Partie
 		
 		//affichage
 		System.out.println("----------Carte----------");
-		for (int x=0; x<12; x++)
+		for (int x=0; x<nMap; x++)
 		{
-			for (int y=0; y<12; y++)
+			for (int y=0; y<nMap; y++)
 			{
 				System.out.print(carte[x][y]);
 			}
