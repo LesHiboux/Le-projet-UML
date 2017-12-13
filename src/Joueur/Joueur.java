@@ -216,7 +216,7 @@ public class Joueur
 	}
 
 	//------------Fonctions--------//
-	public boolean deplacer(int choix)
+	public boolean deplacer(int choix, int n)
 	{
 		//choix = 1, 2, 3, 4, 6, 7, 8, 9
 		//bas-gauche, bas, bas-droite, gauche, droite, haut-gauche, haut, haut-droite
@@ -231,7 +231,7 @@ public class Joueur
 		{
 			case 1:
 			{
-				if(posY-1<0 || posX+1>11)
+				if(posY-1<0 || posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
@@ -246,7 +246,7 @@ public class Joueur
 
 			case 2:
 			{
-				if(posX+1>11)
+				if(posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
@@ -261,7 +261,7 @@ public class Joueur
 
 			case 3:
 			{
-				if(posY+1>11 || posX+1>11)
+				if(posY+1>11 || posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
@@ -290,7 +290,7 @@ public class Joueur
 
 			case 6:
 			{
-				if(posY+1 > 11)
+				if(posY+1 > n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
@@ -333,7 +333,7 @@ public class Joueur
 
 			case 9:
 			{
-				if(posY+1>11 || posX-1<0)
+				if(posY+1>n-1 || posX-1<0)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
@@ -425,7 +425,7 @@ public class Joueur
 			pPosY=pirateCourant.getPosY();
 			if((this.posX == pPosX-1 && this.posY == pPosY-1) || (this.posX == pPosX && this.posY == pPosY-1) || (this.posX == pPosX+1 && this.posY == pPosY-1) || (this.posX == pPosX-1 && this.posY == pPosY) || (this.posX==pPosX && this.posY==pPosY) || (this.posX == pPosX+1 && this.posY == pPosY) || (this.posX == pPosX-1 && this.posY == pPosY+1) || (this.posX == pPosX && this.posY == pPosY+1) || (this.posX == pPosX+1 && this.posY == pPosY+1))
 			{
-				System.out.println("bug combat" + pirateCourant.toString());
+				System.out.println("Combat joueur: "+ this.toString() + " vs: " + pirateCourant.toString());
 				Random x=new Random();		//Génération d'un nombre aléatoire
 				int jet=x.nextInt(10)+1;	//entre 1(inclu) et 10 -> 11(exclu)
 				//Si le pirate est proche du joueur

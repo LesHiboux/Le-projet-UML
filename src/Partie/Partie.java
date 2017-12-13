@@ -25,6 +25,8 @@ public class Partie
 	private int tresorPosX;
 	private int tresorPosY;
 
+	private int n=12;
+
 	//Fonctions
 	public Partie()
 	{
@@ -484,32 +486,29 @@ public class Partie
 		boolean defaite=false;
 		while(victoire==false || defaite==false)
 		{
+			if(fileJoueurs.size()==0)
+			{
+				//Si plus aucuns joueurs dans la file de joueurs défaite
+				defaite=true;
+			}
 			for(int i=0; i<fileJoueurs.size(); i++)
 			{
 				joueurCourant=fileJoueurs.pollFirst();
-				if(joueurCourant==null)
+				
+				victoire=tourJoueur();
+				if(victoire)
 				{
-					//Si plus aucuns joueurs dans la file de joueurs défaite
-					defaite=true;
 					break;
+				}
+				if(joueurCourant!=null)
+				{
+					//Si le jouer a survécu à son tour (n'est pas mort pendant son combat)
+					//On le replace à la fin de la file de joueurs
+					fileJoueurs.addLast(joueurCourant);
 				}
 				else
 				{
-					victoire=tourJoueur();
-					if(victoire)
-					{
-						break;
-					}
-					if(joueurCourant!=null)
-					{
-						//Si le jouer a survécu à son tour (n'est pas mort pendant son combat)
-						//On le replace à la fin de la file de joueurs
-						fileJoueurs.addLast(joueurCourant);
-					}
-					else
-					{
-						i=i-1;
-					}
+					i=i-1;
 				}
 			}
 			if(victoire || defaite)
@@ -520,7 +519,7 @@ public class Partie
 			for(int j=0; j<filePirates.size(); j++)
 			{
 				pirateCourant=filePirates.pollFirst();
-				
+				System.out.println("tour du pirate:" + pirateCourant.toString());
 				if(pirateCourant!=null)
 				{
 					//Si il reste des pirates,
@@ -556,27 +555,26 @@ public class Partie
 		Flibustier tmpF;
 		boolean vivant=true;
 		pirateCourant.deplacer();
-		afficherCarte();
-		System.out.println("pirate bug?");
 		if(pirateCourant instanceof Boucanier)
 		{
 			tmpB=(Boucanier) pirateCourant;
-			System.out.println("pirate bugBouc?");
+			System.out.println("pirate combat Bouc?");
 			vivant=tmpB.attaquer(fileJoueurs);
-			System.out.println("pirate bugBouc2?");
+			System.out.println("pirate fin combatBouc2?");
 			
 		}
 		else if(pirateCourant instanceof Flibustier)
 		{
 			tmpF=(Flibustier) pirateCourant;
-			System.out.println("pirate bugFlib?");
+			System.out.println("pirate combat Flib?");
 			vivant=tmpF.attaquer(fileJoueurs);
-			System.out.println("pirate bugFlib2?");
+			System.out.println("pirate fin combat Flib2?");
 		}
 		
 		if(vivant == false)
 		{
 			//Si le pirate est mort lors du combat, on suprime le pirate courant
+			System.out.println("Pirate mort");
 			pirateCourant=null;
 		}
 		return;
@@ -586,18 +584,14 @@ public class Partie
 	{
 		//Retourne true si victoire, false sinon
 			//Déplacement
+		boolean deplacer=false;
 		afficherCarte();
 		Scanner saisie = new Scanner(System.in);
-		System.out.println("Choisissez une direction 1 2 3 4 6 7 8 9 s q");
-		String choix=saisie.nextLine();
-		/*if(choix=="s")
-		{
-			boolean saveValide=sauvegarde();
-		}*/
-		while(!joueurCourant.deplacer(Integer.parseInt(choix)))
+		while(deplacer==false)
 		{
 			System.out.println("Choisissez une direction 1 2 3 4 6 7 8 9 s q");
-			choix=saisie.nextLine();
+			String choix=saisie.nextLine();
+			System.out.println(choix);
 			/*if(choix=="s")
 			{
 				boolean saveValide=sauvegarde();
@@ -606,6 +600,11 @@ public class Partie
 			{
 
 			}*/
+			if(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4") || choix.equals("6") || choix.equals("7") || choix.equals("8") || choix.equals("9"))
+			{
+				System.out.println("la");
+				deplacer=joueurCourant.deplacer(Integer.parseInt(choix), n);
+			}
 		}
 
 			//Combat

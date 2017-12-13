@@ -104,36 +104,41 @@ public class Pirate {
 		return false;
 	}	
 	public void deplacer() {
-		int posX2=5;
-		int posY2=5;
+		int posX2=posX;
+		int posY2=posY;
 		boolean valide = false;
 		//deplacement aleatoire
 		while (valide == false) {
+
 			valide=true;
 			Random x = new Random();
 			int direction = x.nextInt(9)+1;
 			switch(direction) {
-				case 1: posX2=posX+1;
-					posY2=posY-1;
-				case 2:
+				case 1:
+				{
 					posX2=posX+1;
+					posY2=posY-1;
+					break;
+				}
+				case 2:
+					posX2=posX+1; break;
 				case 3:
 					posX2=posX+1;
-					posY2=posY+1;
+					posY2=posY+1; break;
 				case 4:
-					posY2=posY-1;
+					posY2=posY-1; break;
 				case 5:
-					valide=false;
+					valide=false; break;
 				case 6:
-					posY2=posY+1;
+					posY2=posY+1; break;
 				case 7:
 					posX2=posX-1;
-					posY2=posY-1;
+					posY2=posY-1; break;
 				case 8:
-					posX2=posX-1;
+					posX2=posX-1; break;
 				case 9:
 					posX2=posX-1;
-					posY2=posY+1;
+					posY2=posY+1; break;
 
 			}
 			//vérification direction non hors map
