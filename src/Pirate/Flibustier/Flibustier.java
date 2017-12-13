@@ -49,8 +49,9 @@ public class Flibustier extends Pirate {
 		super();
 	}*/
 	
-	public boolean attaquer(LinkedList<Joueur> fileJoueurs) {
+	public boolean attaquer(LinkedList<Joueur> fileJoueurs, int nTour) {
 		Joueur j=new Joueur(0,0,0);
+		if (nTour==1) return true;
 		for (int i=0;i<fileJoueurs.size();i++) {
 			j=(Joueur) fileJoueurs.get(i);
 		
