@@ -142,7 +142,7 @@ public class Pirate {
 
 			}
 			//vérification direction non hors map
-			if (posX2>=12 || posX2<0 || posY2>=12 || posY2<0) { 
+			if (posX2>=n || posX2<0 || posY2>=n || posY2<0) { 
 				valide=false;
 				posX2=posX;
 				posY2=posY;
