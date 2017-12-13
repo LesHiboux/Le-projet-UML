@@ -63,8 +63,8 @@ public class Partie
 			while (ncoord.inside(coords))
 			{
 				Random jet= new Random();
-				nx = jet.nextInt(11);
-				ny = jet.nextInt(11);
+				nx = jet.nextInt(nMap);
+				ny = jet.nextInt(nMap);
 				ncoord = new Pair(nx, ny);
 
 			}
@@ -82,8 +82,8 @@ public class Partie
 			while (ncoord.inside(coords))
 			{
 				Random jet= new Random();
-				nx = jet.nextInt(11);
-				ny = jet.nextInt(11);
+				nx = jet.nextInt(nMap);
+				ny = jet.nextInt(nMap);
 				ncoord = new Pair(nx, ny);
 
 			}
@@ -96,7 +96,6 @@ public class Partie
 					Pirate nPirate = new Boucanier(ncoord.getX(), ncoord.getY());
 					coords.add(ncoord);
 					filePirates.addFirst(nPirate);
-					System.out.println("Constr Bouc" + nPirate.toString());
 					break;
 				}
 				case 1:
@@ -104,7 +103,6 @@ public class Partie
 					Pirate nPirate = new Flibustier(ncoord.getX(), ncoord.getY());
 					coords.add(ncoord);
 					filePirates.addFirst(nPirate);
-					System.out.println("Constr Flib" + nPirate.toString());
 					break;
 				}
 			}
@@ -121,8 +119,8 @@ public class Partie
 				while (ncoord.inside(coords))
 				{
 					Random jet= new Random();
-					nx = jet.nextInt(11);
-					ny = jet.nextInt(11);
+					nx = jet.nextInt(nMap);
+					ny = jet.nextInt(nMap);
 					ncoord = new Pair(nx, ny);
 
 				}
@@ -149,8 +147,8 @@ public class Partie
 		}
 			//Treasure
 		Random jet= new Random();
-		this.tresorPosX = jet.nextInt(11);
-		this.tresorPosY = jet.nextInt(11);
+		this.tresorPosX = jet.nextInt(nMap);
+		this.tresorPosY = jet.nextInt(nMap);
 		
 	}
 
