@@ -44,8 +44,9 @@ public class Boucanier extends Pirate {
 		return true;
 	}
 
-	public boolean attaquer(LinkedList<Joueur> fileJoueurs) {//determine si le pirate attaque ou non des joueurs et si oui lesquels puis lance le combat 
+	public boolean attaquer(LinkedList<Joueur> fileJoueurs,int nTour) {//determine si le pirate attaque ou non des joueurs et si oui lesquels puis lance le combat 
 		Joueur j;
+		if (nTour==1) return true;
 		for (int i=0;i<fileJoueurs.size();i++) {
 			j=fileJoueurs.get(i);
 			System.out.println("erreur atak Bouc: " + j.toString());
