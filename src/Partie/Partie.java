@@ -25,7 +25,7 @@ public class Partie
 	private int tresorPosY;
 
 	private int nMap=12;
-	proivate int nTour=1;
+	private int nTour=1;
 
 	//Fonctions
 	public Partie()
