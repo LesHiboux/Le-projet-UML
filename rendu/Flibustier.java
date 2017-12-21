@@ -43,11 +43,6 @@ public class Flibustier extends Pirate {
 		j=null;
 		return true;
 	}
-
-	/*public void deplacer()
-	{
-		super();
-	}*/
 	
 	public boolean attaquer(LinkedList<Joueur> fileJoueurs, int nTour) {
 		if (nTour==1) return true;
@@ -70,4 +65,5 @@ public class Flibustier extends Pirate {
 		}
 		return true;
 	}
+	//les deux fonctions retournent true si le pirate est toujours vivant et false si il meurt
 }
