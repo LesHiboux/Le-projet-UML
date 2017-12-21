@@ -66,4 +66,5 @@ public class Boucanier extends Pirate {
 		}
 		return true;
 	}
+	//les deux fonctions retournent true si le pirate est toujours vivant ou false si il meurt
 }
