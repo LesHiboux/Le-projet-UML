@@ -1,4 +1,4 @@
-Pour l'ancer le logiciel, il sufi dans un terminal de vous rendre dans le répertoire ou sont stockés les fichiers,
+Pour lancer le logiciel, il suffit, dans un terminal, de vous rendre dans le répertoire où sont stockés les fichiers,
 Puis de taper 
 >make compil
 	Por compiler le logiciel (Nécessite le compilateur de java: javac)
