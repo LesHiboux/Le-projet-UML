@@ -28,7 +28,7 @@ public class Joueur
 
 	public Joueur(String strJoueur) throws JoueurException
 	{
-		System.out.println(strJoueur);
+		//System.out.println(strJoueur);
 		int compt=0;
 		int pos=0;
 		int posSuiv=0;
@@ -40,9 +40,10 @@ public class Joueur
 			posSuiv=strJoueur.indexOf("|", pos+1);
 			if (posSuiv==-1)
 			{
+				System.out.println("Erreur de construction");
 				throw new JoueurException("Erreur de construction", this);
 			}
-			System.out.println("ici : posX=" + pos + " posY=" + posSuiv);
+			//System.out.println("ici : posX=" + pos + " posY=" + posSuiv);
 			if(compt==0)
 			{
 				info=strJoueur.substring(pos, posSuiv);
@@ -51,7 +52,7 @@ public class Joueur
 			{
 				info=strJoueur.substring(pos+1, posSuiv);
 			}
-			System.out.println("info= " + info);
+			//System.out.println("info= " + info);
 			switch(compt)
 			{
 				case 0:
@@ -63,6 +64,7 @@ public class Joueur
 					}
 					catch(NumberFormatException e)
 					{
+						System.out.println("Erreur de construction");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					compt++;
@@ -76,6 +78,7 @@ public class Joueur
 					}
 					catch(NumberFormatException e)
 					{
+						System.out.println("Erreur de construction");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					compt++;
@@ -89,6 +92,7 @@ public class Joueur
 					}
 					catch(NumberFormatException e)
 					{
+						System.out.println("Erreur de construction");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					compt++;
@@ -98,6 +102,7 @@ public class Joueur
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
+						System.out.println("Erreur de construction");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					pelle=Boolean.valueOf(info);
@@ -108,6 +113,7 @@ public class Joueur
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
+						System.out.println("Erreur de construction");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					mousquet=Boolean.valueOf(info);
@@ -118,6 +124,7 @@ public class Joueur
 				{
 					if(info.equals("false")==false && info.equals("true")==false)
 					{
+						System.out.println("Erreur de construction");
 						throw new JoueurException("Erreur de construction", this);
 					}
 					armure=Boolean.valueOf(info);
@@ -151,9 +158,9 @@ public class Joueur
 		return this.posY;
 	}
 
-	public int getIdJoueur()
+	public char getIdJoueur()
 	{
-		return this.idJoueur;
+		return Character.forDigit(idJoueur, 10);
 	}
 
 	public boolean getPelle()
@@ -216,7 +223,28 @@ public class Joueur
 	}
 
 	//------------Fonctions--------//
-	public boolean deplacer(int choix)
+
+	public void afficheEquipement()
+	{
+		System.out.print("Objets: ");
+		if(pelle)
+		{
+			System.out.print("pelle ");
+		}
+
+		if(mousquet)
+		{
+			System.out.print("mousquet ");
+		}
+
+		if(armure)
+		{
+			System.out.print("armure");
+		}
+		System.out.println();
+	}
+
+	public boolean deplacer(int choix, int n)
 	{
 		//choix = 1, 2, 3, 4, 6, 7, 8, 9
 		//bas-gauche, bas, bas-droite, gauche, droite, haut-gauche, haut, haut-droite
@@ -231,29 +259,29 @@ public class Joueur
 		{
 			case 1:
 			{
-				if(posX-1<0 || posY+1>11)
+				if(posY-1<0 || posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posX=posX-1;
-					posY=posY+1;
+					posY=posY-1;
+					posX=posX+1;
 					return true;
 				}
 			}
 
 			case 2:
 			{
-				if(posY+1>11)
+				if(posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posY=posY+1;
+					posX=posX+1;
 					return true;
 				}
 
@@ -261,63 +289,20 @@ public class Joueur
 
 			case 3:
 			{
-				if(posX+1>11 || posY+1>11)
+				if(posY+1>11 || posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posX=posX+1;
 					posY=posY+1;
+					posX=posX+1;
 					return true;
 				}
 			}
 
 			case 4:
-			{
-				if(posX-1 < 0)
-				{
-					System.out.println("Déplacement impossible");
-					return false;
-				}
-				else
-				{
-					posX=posX-1;
-					return true;
-				}
-			}
-
-			case 6:
-			{
-				if(posX+1 > 11)
-				{
-					System.out.println("Déplacement impossible");
-					return false;
-				}
-				else
-				{
-					posX=posX+1;
-					return true;
-				}
-			}
-
-			case 7:
-			{
-				if(posX-1 <0 || posY-1 <0)
-				{
-					System.out.println("Déplacement impossible");
-					return false;
-				}
-				else
-				{
-					posX = posX-1;
-					posY=posY-1;
-					return true;
-				}
-			}
-
-			case 8:
 			{
 				if(posY-1 < 0)
 				{
@@ -331,17 +316,60 @@ public class Joueur
 				}
 			}
 
-			case 9:
+			case 6:
 			{
-				if(posX+1>11 || posY-1<0)
+				if(posY+1 > n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posX=posX+1;
-					posY=posY-1;
+					posY=posY+1;
+					return true;
+				}
+			}
+
+			case 7:
+			{
+				if(posY-1 <0 || posX-1 <0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posY = posY-1;
+					posX=posX-1;
+					return true;
+				}
+			}
+
+			case 8:
+			{
+				if(posX-1 < 0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX-1;
+					return true;
+				}
+			}
+
+			case 9:
+			{
+				if(posY+1>n-1 || posX-1<0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posY=posY+1;
+					posX=posX-1;
 					return true;
 				}
 			}
@@ -352,11 +380,11 @@ public class Joueur
 				return false;
 			}
 		}
+
 	}
 
 	public void ouvrirCoffre(LinkedList<Coffre> listeCoffres)
 	{
-		System.out.println("Liste Coffres");
 		Coffre coffreCourant;
 		int cPosX, cPosY;
 		boolean cPelle, cArmure, cMousquet;
@@ -365,7 +393,7 @@ public class Joueur
 			coffreCourant=listeCoffres.get(i);
 			cPosX=coffreCourant.getPosX();
 			cPosY=coffreCourant.getPosY();
-			System.out.println(coffreCourant.toString());
+			//System.out.println(coffreCourant.toString());
 			if(this.posX==cPosX && this.posY==cPosY)
 			{
 				//On regarde le contenu du coffre que si il est sur le même case que le joueur
@@ -413,8 +441,12 @@ public class Joueur
 		}
 	}
 	
-	public boolean combat(LinkedList<Pirate> filePirates)	//Return true si vivant, false si joueur mort
+	public boolean combat(LinkedList<Pirate> filePirates, int nTour)	//Return true si vivant, false si joueur mort
 	{
+		if(nTour==1)
+		{
+			return true;
+		}
 		Pirate pirateCourant;
 		int pPosX, pPosY;
 		for(int i=0; i<filePirates.size(); i++)
@@ -425,6 +457,7 @@ public class Joueur
 			pPosY=pirateCourant.getPosY();
 			if((this.posX == pPosX-1 && this.posY == pPosY-1) || (this.posX == pPosX && this.posY == pPosY-1) || (this.posX == pPosX+1 && this.posY == pPosY-1) || (this.posX == pPosX-1 && this.posY == pPosY) || (this.posX==pPosX && this.posY==pPosY) || (this.posX == pPosX+1 && this.posY == pPosY) || (this.posX == pPosX-1 && this.posY == pPosY+1) || (this.posX == pPosX && this.posY == pPosY+1) || (this.posX == pPosX+1 && this.posY == pPosY+1))
 			{
+				//System.out.println("Combat joueur: "+ this.toString() + " vs: " + pirateCourant.toString());
 				Random x=new Random();		//Génération d'un nombre aléatoire
 				int jet=x.nextInt(10)+1;	//entre 1(inclu) et 10 -> 11(exclu)
 				//Si le pirate est proche du joueur
@@ -438,7 +471,9 @@ public class Joueur
 						{
 							//Si le perso a l'armure et le mousquet, il gagne -> pirate mort, joueur vivant
 							//Affiche joueur a tué le boucanier
+							System.out.println("Le joueur a tué un boucanier");
 							filePirates.remove(i);
+							pirateCourant=null;
 						}
 						else
 						{
@@ -446,24 +481,28 @@ public class Joueur
 							if(jet<=5)
 							{
 								//Affiche joueur a tué le boucanier
+								System.out.println("Le joueur a tué un boucanier");
 								filePirates.remove(i);
+								pirateCourant=null;
 							}
 							else
 							{
 								//Affiche joueur décapité par boucanier
+								System.out.println("Le joueur " + idJoueur + " a été tué par un boucanier");
 								return false;
 							}
 						}
 					}
 					else
 					{
-						//Si le joueur n'as pas le mousquet, combat seulement si ils sont sur la meme case
+						//Si le joueur n'as pas le mousquet, com bat seulement si ils sont sur la meme case
 						if(this.posX==pPosX && this.posY==pPosY)
 						{
 							if(this.armure==false)
 							{
 								//Si le joueur n'as pas de mousquet et d'armure, il est mort...
 								//Affiche joueur décapité par boucanier
+								System.out.println("Le joueur " + idJoueur + " a été tué par un boucanier");
 								return false;
 							}
 							else
@@ -472,6 +511,7 @@ public class Joueur
 								if(jet==10)
 								{
 									//Affiche joueur décapité par boucanier
+									System.out.println("Le joueur " + idJoueur + " a été tué par un boucanier");
 									return false;
 								}
 								//Affiche joueur a survécu au boucanier
@@ -486,6 +526,7 @@ public class Joueur
 					{
 						//Si le joueur n'as ni le mousquet ni l'armure, il est mort
 						//Affiche joueur tué par le flibustier
+						System.out.println("Le joueur " + idJoueur +" s'est fait tué par un flibustier");
 						return false;
 					}
 					else if(this.mousquet==false && this.armure==true)
@@ -494,6 +535,7 @@ public class Joueur
 						if(jet==10)
 						{
 							//Affiche joueur tué par le flibustier
+							System.out.println("Le joueur " + idJoueur +" s'est fait tué par un flibustier");
 							return false;
 						}
 						//Affiche joueur a survécu au flibustier
@@ -504,11 +546,14 @@ public class Joueur
 						if(jet<=5)
 						{
 							//Affiche joueur a tué le flibustier
+							System.out.println("Le joueur a tué un flibustier");
 							filePirates.remove(i);
+							pirateCourant=null;
 						}
 						else
 						{
 							//Affiche joueur tué par le flibustier
+							System.out.println("Le joueur " + idJoueur + " s'est fait tué par un flibustier");
 							return false;
 						}
 					}
@@ -516,9 +561,14 @@ public class Joueur
 					{
 						//Si le joueur a l'armure et le mousquet il gagne
 						//Affiche joueur a tué le flibustier
+						System.out.println("Le joueur a tué un flibustier");
 						filePirates.remove(i);
 					}
 				}
+			}
+			if(pirateCourant==null)
+			{
+				i--;
 			}
 		}
 		//Le joueur a survécu à toutes les attaques de pirates.

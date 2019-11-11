@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.*;
 import java.io.*;
 
-public class Partie implements Affichage
+public class Partie
 {
 
 	//Attributs
@@ -15,12 +15,17 @@ public class Partie implements Affichage
 	private LinkedList<Pirate> filePirates;
 	private int nbPirates;
 	private Pirate pirateCourant;
-
+	private Flibustier flibCourant;
+	private Boucanier boucCourant;
+	
 	private LinkedList<Coffre> listeCoffres;
 	private int nbCoffres;
 
 	private int tresorPosX;
 	private int tresorPosY;
+
+	private int nMap=12;
+	private int nTour=1;
 
 	//Fonctions
 	public Partie()
@@ -28,18 +33,52 @@ public class Partie implements Affichage
 		//je te construis et dans le main appel :  Affichage jeu = new Partie();//
 		this.fileJoueurs =new LinkedList<Joueur>();
 		this.filePirates =new LinkedList<Pirate>(); 
-		this.listeCoffres =new LinkedList<Coffre>(); 
-		
+		this.listeCoffres =new LinkedList<Coffre>();
+
+
+		boolean choix1=false;
+		boolean choix2=false;
+		Scanner saisieMode = new Scanner(System.in);
+		while(choix1==false && choix2==false)
+		{
+			afficherAccueil();
+			String choix=saisieMode.nextLine();
+			switch(choix)
+			{
+				case "1":
+				{
+					choix1=true;
+					break;
+				}
+				case "2" :
+				{
+					choix2=charger();
+					break;
+				}
+				case "q":
+				{
+					System.exit(0);
+				}
+				case "Q":
+				{
+					System.exit(0);
+				}
+			}
+		}
+		if (choix2) return;
+
+		//if(charger()) return;
+
 		//Inputs
 		Scanner saisie = new Scanner(System.in);
 		int askJoueur = 0;
-		while (askJoueur < 1)		//Mauvaise vérif...
+		while (askJoueur < 1)
 		{
 			System.out.println("combien de joueur ?");
 			askJoueur = Integer.parseInt(saisie.nextLine());			
 		}
 		int askPirate = -1;
-		while (askPirate < 0)	//Mauvaise vérif...
+		while (askPirate < 0)
 		{
 			System.out.println("combien de pirate ?");
 			askPirate = Integer.parseInt(saisie.nextLine());			
@@ -52,15 +91,15 @@ public class Partie implements Affichage
 		Pair nul = new Pair(-1, -1);
 		coords.add(nul);
 			//Players
-		while (askJoueur != 0)	//Mauvaise vérif...
+		while (askJoueur != 0)
 		{
 			int nx = -1; int ny = -1;
 			Pair ncoord = new Pair(nx, ny);
 			while (ncoord.inside(coords))
 			{
 				Random jet= new Random();
-				nx = jet.nextInt(11);
-				ny = jet.nextInt(11);
+				nx = jet.nextInt(nMap);
+				ny = jet.nextInt(nMap);
 				ncoord = new Pair(nx, ny);
 
 			}
@@ -77,13 +116,13 @@ public class Partie implements Affichage
 			while (ncoord.inside(coords))
 			{
 				Random jet= new Random();
-				nx = jet.nextInt(11);
-				ny = jet.nextInt(11);
+				nx = jet.nextInt(nMap);
+				ny = jet.nextInt(nMap);
 				ncoord = new Pair(nx, ny);
 
 			}
 			Random FouB = new Random();
-			int yolo = FouB.nextInt(1);
+			int yolo = FouB.nextInt(2);
 			switch (yolo)
 			{
 				case 0:
@@ -91,14 +130,14 @@ public class Partie implements Affichage
 					Pirate nPirate = new Boucanier(ncoord.getX(), ncoord.getY());
 					coords.add(ncoord);
 					filePirates.addFirst(nPirate);
-
+					break;
 				}
 				case 1:
 				{
 					Pirate nPirate = new Flibustier(ncoord.getX(), ncoord.getY());
 					coords.add(ncoord);
 					filePirates.addFirst(nPirate);
-
+					break;
 				}
 			}
 			askPirate = askPirate-1;
@@ -114,8 +153,8 @@ public class Partie implements Affichage
 				while (ncoord.inside(coords))
 				{
 					Random jet= new Random();
-					nx = jet.nextInt(11);
-					ny = jet.nextInt(11);
+					nx = jet.nextInt(nMap);
+					ny = jet.nextInt(nMap);
 					ncoord = new Pair(nx, ny);
 
 				}
@@ -142,9 +181,8 @@ public class Partie implements Affichage
 		}
 			//Treasure
 		Random jet= new Random();
-		this.tresorPosX = jet.nextInt(11);
-		this.tresorPosY = jet.nextInt(11);
-		
+		this.tresorPosX = jet.nextInt(nMap);
+		this.tresorPosY = jet.nextInt(nMap);
 	}
 
 
@@ -152,13 +190,13 @@ public class Partie implements Affichage
 public boolean charger()
 	{
 		//Récupération du dossier de sauvegarde
-		String nomSave;
-		String nomDossier="./Sauvegardes/";
+		String nomSave="./Sauvegardes/";
+		String nomDossier;
 		Scanner saisie = new Scanner(System.in);
 		System.out.println("Saisissez le nom de la sauvegarde");
-		nomSave = saisie.nextLine();
-		nomDossier+=nomSave;
-		File dossierSave= new File(nomDossier);
+		nomDossier = saisie.nextLine();
+		nomSave+=nomDossier;
+		File dossierSave= new File(nomSave);
 		if(dossierSave.exists()==false)
 		{
 			System.out.println("erreur la sauvegarde n'existe pas");
@@ -167,229 +205,319 @@ public boolean charger()
 		
 		//Récupération du fichier joueur
 		//File fJoueur = new File(nomDossier + "/joueur.hib");
-		Joueur newJoueur;
-		InputStream ipsJoueur = new FileInputStream(nomSave + "/joueur.hib");
-		InputStreamReader ipsrJoueur = new InputStreamReader(ipsJoueur);
-		BufferedReader brJoueur = new BufferedReader(ipsrJoueur);
-		String ligneJoueur;
-		while((ligneJoueur=brJoueur.readLine())!=null)
+		try
 		{
-			newJoueur=new Joueur(ligneJoueur);
-			fileJoueurs.addLast(newJoueur);
+			Joueur newJoueur;
+			File fJoueur= new File(nomSave + "/joueur.hib");
+			InputStream ipsJoueur = new FileInputStream(nomSave + "/joueur.hib");
+			InputStreamReader ipsrJoueur = new InputStreamReader(ipsJoueur);
+			BufferedReader brJoueur = new BufferedReader(ipsrJoueur);
+			String ligneJoueur;
+			while((ligneJoueur=brJoueur.readLine())!=null)
+			{
+				newJoueur=new Joueur(ligneJoueur);
+				fileJoueurs.addLast(newJoueur);
+			}
+			brJoueur.close();
+			fJoueur.delete();
 		}
-		brJoueur.close();
+		catch(IOException eIO)
+		{
+			System.out.println("Erreur fichier joueur");
+			return false;
+		}
+		catch(JoueurException eJ)
+		{
+			System.out.println("Erreur construction joueur");
+			return false;
+		}
 
 		//Récupération du fichier coffre
-		Coffre newCoffre;
-		InputStream ipsCoffre = new FileInputStream(nomSave + "/coffre.hib");
-		InputStreamReader ipsrCoffre = new InputStreamReader(ipsCoffre);
-		BufferedReader brCoffre = new BufferedReader(ipsrCoffre);
-		String ligneCoffre;
-		while((ligneCoffre=brCoffre.readLine())!=null)
+		try
 		{
-			newCoffre=new Coffre(ligneCoffre);
-			listeCoffres.addLast(newCoffre);
+			Coffre newCoffre;
+			File fCoffre=new File(nomSave + "/coffre.hib");
+			InputStream ipsCoffre = new FileInputStream(nomSave + "/coffre.hib");
+			InputStreamReader ipsrCoffre = new InputStreamReader(ipsCoffre);
+			BufferedReader brCoffre = new BufferedReader(ipsrCoffre);
+			String ligneCoffre;
+			while((ligneCoffre=brCoffre.readLine())!=null)
+			{
+				newCoffre=new Coffre(ligneCoffre);
+				listeCoffres.addLast(newCoffre);
+			}
+			fCoffre.delete();
+			brCoffre.close();
 		}
-		brCoffre.close();
+		catch(CoffreException eC)
+		{
+			System.out.println("erreur");
+			return false;
+		}
+		catch(IOException eIO)
+		{
+			System.out.println("Erreur Coffre");
+			return false;
+		}
 
 		//Récupération du fichier trésor
-		InputStream ipsTresor = new FileInputStream(nomSave + "/tresor.hib");
-		InputStreamReader ipsrTresor = new InputStreamReader(ipsTresor);
-		BufferedReader brTresor = new BufferedReader(ipsrTresor);
-		String ligneTresor;
-		while((ligneTresor=brTresor.readLine())!=null)
+		try
 		{
-			int compt=0;
-			int pos=0;
-			int posSuiv=0;
-			String info="";
-			while (compt<2)
+			File fTresor=new File(nomSave + "/tresor.hib");
+			InputStream ipsTresor = new FileInputStream(nomSave + "/tresor.hib");
+			InputStreamReader ipsrTresor = new InputStreamReader(ipsTresor);
+			BufferedReader brTresor = new BufferedReader(ipsrTresor);
+			String ligneTresor;
+			while((ligneTresor=brTresor.readLine())!=null)
 			{
-				pos=posSuiv;
-				posSuiv=ligneTresor.indexOf("|", pos+1);
-				if(compt==0)
+				int compt=0;
+				int pos=0;
+				int posSuiv=0;
+				String info="";
+				while (compt<4)
 				{
-					info=ligneTresor.substring(pos, posSuiv);
-				}
-				else
-				{
-					info=ligneTresor.substring(pos+1, posSuiv);
-				}
-				switch(compt)
-				{
-					case 0:
+					pos=posSuiv;
+					posSuiv=ligneTresor.indexOf("|", pos+1);
+					if(compt==0)
 					{
-						try
-						{
-							tresorPosX=Integer.parseInt(info);
-						}
-						catch(NumberFormatException e)
-						{
-							//throw new JoueurException("Erreur de construction", this);
-						}
-						compt++;
-						break;
+						info=ligneTresor.substring(pos, posSuiv);
 					}
-					case 1:
+					else
 					{
-						try
+						info=ligneTresor.substring(pos+1, posSuiv);
+					}
+					switch(compt)
+					{
+						case 0:
 						{
-							tresorPosY=Integer.parseInt(info);
+							try
+							{
+								tresorPosX=Integer.parseInt(info);
+							}
+							catch(NumberFormatException e)
+							{
+								System.out.println("Erreur construction tresor");
+								return false;
+								//throw new JoueurException("Erreur de construction", this);
+							}
+							compt++;
+							break;
 						}
-						catch(NumberFormatException e)
+						case 1:
 						{
-							//throw new JoueurException("Erreur de construction", this);
+							try
+							{
+								tresorPosY=Integer.parseInt(info);
+							}
+							catch(NumberFormatException e)
+							{
+								System.out.println("Erreur construction tresor");
+								return false;
+								//throw new JoueurException("Erreur de construction", this);
+							}
+							compt++;
+							break;
 						}
-						compt++;
-						break;
+						case 2:
+						{
+							try
+							{
+								nMap=Integer.parseInt(info);
+							}
+							catch(NumberFormatException e)
+							{
+								System.out.println("Erreur construction taille Map");
+								return false;
+								//throw new JoueurException("Erreur de construction", this);
+							}
+							compt++;
+							break;
+						}
+						case 3:
+						{
+							try
+							{
+								nTour=Integer.parseInt(info);
+							}
+							catch(NumberFormatException e)
+							{
+								System.out.println("Erreur construction nombre de tours");
+								return false;
+								//throw new JoueurException("Erreur de construction", this);
+							}
+							compt++;
+							break;
+						}
 					}
 				}
 			}
+			fTresor.delete();
+			brTresor.close();
+
 		}
-		brTresor.close();
+		catch(IOException eIO)
+		{
+			System.out.println("Erreur Tresor");
+			return false;
+		}
 
 		//Récupération du fichier pirates
-		InputStream ipsPirate = new FileInputStream(nomSave + "/pirate.hib");
-		InputStreamReader ipsrPirate = new InputStreamReader(ipsPirate);
-		BufferedReader brPirate = new BufferedReader(ipsrPirate);
-		String lignePirate;
-		while((lignePirate=brPirate.readLine())!=null)
+		try
 		{
-			Pirate newPirate;
-			int compt=0;
-			int pos=0;
-			int posSuiv=0;
-			String info="";
-			while (compt<1)
+			File fPirate=new File(nomSave + "/pirate.hib");
+			InputStream ipsPirate = new FileInputStream(nomSave + "/pirate.hib");
+			InputStreamReader ipsrPirate = new InputStreamReader(ipsPirate);
+			BufferedReader brPirate = new BufferedReader(ipsrPirate);
+			String lignePirate;
+			while((lignePirate=brPirate.readLine())!=null)
 			{
-				pos=posSuiv;
-				posSuiv=lignePirate.indexOf("|", pos+1);
-				info=lignePirate.substring(pos, posSuiv);
-				switch(compt)
+				Pirate newPirate;
+				int compt=0;
+				int pos=0;
+				int posSuiv=0;
+				String info="";
+				while (compt<1)
 				{
-					case 0:
+					pos=posSuiv;
+					posSuiv=lignePirate.indexOf("|", pos+1);
+					info=lignePirate.substring(pos, posSuiv);
+					switch(compt)
 					{
-						switch(info)
+						case 0:
 						{
-							case "1":
+							switch(info)
 							{
-								newPirate=new Flibustier(lignePirate);
-								filePirates.addLast(newPirate);
-								break;
+								case "1":
+								{
+									newPirate=new Flibustier(lignePirate);
+									filePirates.addLast(newPirate);
+									break;
+								}
+								case "2":
+								{
+									newPirate=new Boucanier(lignePirate);
+									filePirates.addLast(newPirate);
+									break;
+								}
 							}
-							case "2":
-							{
-								newPirate=new Boucanier(lignePirate);
-								filePirates.addLast(newPirate);
-								break;
-							}
+							compt++;
+							break;
 						}
-						compt++;
-						break;
 					}
 				}
 			}
+			fPirate.delete();
+			brPirate.close();
+			dossierSave.delete();
 		}
-		brPirate.close();
+		catch(PirateException eP)
+		{
+			System.out.println("Erreur construction Pirate");
+			return false;
+		}
+		catch(IOException eIO)
+		{
+			System.out.println("Erreur Pirate");
+			return false;
+		}
 		return true;
 	}
 
 	public boolean sauvegarde()
 	{
-		BufferedWriter bw;
-		PrintWriter pWriter;
-
-		//Création du dossier ./Sauvegardes/nomSave/
-		String ligne;
-		boolean creer;
-		String name;
-		String dossier="./Sauvegardes/";
-		Scanner saisie = new Scanner(System.in);
-		System.out.println("Saisissez le nom de la sauvegarde");
-		name=saisie.nextLine();
-		dossier+=name;
-		File dossierSave = new File(dossier);
-		if(dossierSave.exists()==false)
-		{
-			creer=dossierSave.mkdirs();
-		}
-		//Création du fichier Joueur
-		File fJoueur = new File(dossier + "/joueur.hib");
 		try
 		{
+			BufferedWriter bw;
+			PrintWriter pWriter;
+
+			//Création du dossier ./Sauvegardes/nomSave/
+			String ligne;
+			boolean creer;
+			String name;
+			String dossier="./Sauvegardes/";
+			Scanner saisie = new Scanner(System.in);
+			System.out.println("Saisissez le nom de la sauvegarde");
+			name=saisie.nextLine();
+			dossier+=name;
+			File dossierSave = new File(dossier);
+			if(dossierSave.exists()==false)
+			{
+				creer=dossierSave.mkdirs();
+			}
+			else 
+			{
+				System.out.println("La sauvegarde existe déjà");
+				return false;
+			}
+
+			//Création du fichier Joueur
+			File fJoueur = new File(dossier + "/joueur.hib");
 			creer=fJoueur.createNewFile();
-		}
-		catch(IOException e)
-		{
-			System.out.println("erreur");
-		}
-		Joueur joueurActuel;
-		bw = new BufferedWriter(new FileWriter(dossier + "/joueur.hib"));
-		pWriter = new PrintWriter(bw);
 
-		for(int j = 0; j<fileJoueurs.size(); j++)
-		{
-			joueurActuel=fileJoueurs.get(j);
-			pWriter.println(joueurActuel.toString());
-		}
-		pWriter.close();
+			//écrire dans le fichier Joueur
+			Joueur joueurActuel;
+			bw = new BufferedWriter(new FileWriter(dossier + "/joueur.hib"));
+			pWriter = new PrintWriter(bw);
+
+			pWriter.print(joueurCourant.toString());
+			for(int j = 0; j<fileJoueurs.size(); j++)
+			{
+				pWriter.println();
+				joueurActuel=(Joueur) fileJoueurs.get(j);
+				pWriter.print(joueurActuel.toString());
+			}
+
+			pWriter.close();
 
 
-		//Création fichier pirate
-		File fPirate = new File(dossier + "/pirate.hib");
-		try
-		{
+			//Création fichier pirate
+			File fPirate = new File(dossier + "/pirate.hib");
 			creer=fPirate.createNewFile();
-		}
-		catch(IOException e)
-		{
-			System.out.println("erreur");
-		}
-		Pirate pirateActuel;
-		int P;
-		bw = new BufferedWriter(new FileWriter(dossier + "/pirate.hib"));
-		pWriter = new PrintWriter(bw);
-		for(P = 0; P<filePirates.size(); P++);
-		{
-			pirateActuel=filePirates.get(P);
-			pWriter.println(pirateActuel.toString());
-		}
-		pWriter.close();
 
-		//Création fichier coffre
-		File fCoffre = new File(dossier + "/coffre.hib");
-		try
-		{
+			//écriture dans le fichier Pirate
+			Pirate pirateActuel;
+			bw = new BufferedWriter(new FileWriter(dossier + "/pirate.hib"));
+			pWriter = new PrintWriter(bw);
+			for(int p = 0; p<filePirates.size(); p++)
+			{
+				if(p>0) pWriter.println();
+				pirateActuel=(Pirate) filePirates.get(p);
+				pWriter.print(pirateActuel.toString());
+			}
+			pWriter.close();
+
+			//Création fichier coffre
+			File fCoffre = new File(dossier + "/coffre.hib");
 			creer=fCoffre.createNewFile();
-		}
-		catch(IOException e)
-		{
-			System.out.println("erreur");
-		}
-		Coffre coffreCourant;
-		bw = new BufferedWriter(new FileWriter(dossier + "/coffre.hib"));
-		pWriter = new PrintWriter(bw);
-		for(int i=0; i<listeCoffres.size(); i++)
-		{
-			coffreCourant=listeCoffres.get(i);
-			pWriter.println(coffreCourant.toString());
-		}
-		pWriter.close();
+			Coffre coffreCourant;
 
-		//Création fichier trésor
-		File fTresor = new File(dossier + "/tresor.hib");
-		try
-		{
+			//écriture dans le fichier Coffre
+			bw = new BufferedWriter(new FileWriter(dossier + "/coffre.hib"));
+			pWriter = new PrintWriter(bw);
+			for(int i=0; i<listeCoffres.size(); i++)
+			{
+				if(i>0) pWriter.println();
+				coffreCourant=listeCoffres.get(i);
+				pWriter.print(coffreCourant.toString());
+			}
+			pWriter.close();
+
+			//Création fichier trésor
+			File fTresor = new File(dossier + "/tresor.hib");
+
 			creer=fTresor.createNewFile();
+
+			//écriture dans le fichier tresor
+			bw = new BufferedWriter(new FileWriter(dossier + "/tresor.hib"));
+			pWriter = new PrintWriter(bw);
+			pWriter.print(tresorPosX + "|" + tresorPosY + "|" + nMap + "|" + nTour + "|");
+			pWriter.close();
 		}
-		catch(IOException e)
+		catch(IOException eIO)
 		{
-			System.out.println("erreur");
+			System.out.println("erreur de sauvegarde");
+			return false;
 		}
-		bw = new BufferedWriter(new FileWriter(dossier + "/tresor.hib"));
-		pWriter = new PrintWriter(bw);
-		pWriter.println(tresorPosX + "|" + tresorPosY + "|");
-		pWriter.close();
 		return true;
 	}
 
@@ -406,57 +534,58 @@ public boolean charger()
 		
 	}
 
-	public void afficherCarte(LinkedList fileJoueurs, LinkedList filePirates, LinkedList fileCoffres)
+	public void afficherCarte()
 	{
 		//generation de la carte a afficher
-		char carte[][] = { {'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'} };
+		char carte[][]=new char [nMap][nMap];
 		char id;
 		int xx;
 		int yy;
 		
-		for (int c = nbCoffres; c!=0; c--)
+		for (int row=0; row<nMap; row++)
 		{
-			Coffre temp = listeCoffres.get(c-1);
-			xx = temp.getPosX();
-			yy = temp.getPosY();
+			for (int col=0; col<nMap; col++)
+			{
+				carte[row][col]='+';
+			}
+		}
+		
+		for (int c = listeCoffres.size()-1; c>=0; c--)
+		{
+			Coffre tempC = listeCoffres.get(c);
+			xx = tempC.getPosX();
+			yy = tempC.getPosY();
 			carte[xx][yy] = 'C';
 		}
 		
-		for (int p = nbPirates; p!=0; p--)
+		for (int p = filePirates.size()-1; p>=0; p--)
 		{
-			Pirate temp = filePirates.get(p-1);
-			xx = temp.getPosX();
-			yy = temp.getPosY();
-			if (temp instanceof Boucanier) id = 'B';
+			Pirate tempP = (Pirate) filePirates.get(p);
+			xx = tempP.getPosX();
+			yy = tempP.getPosY();
+			if (tempP instanceof Boucanier) id = 'B';
 			else id = 'F';
 			carte[xx][yy] = id;
 		}
 		
-		for (int j = nbJoueurs; j!=0; j--)
+		for (int j = fileJoueurs.size()-1; j>=0; j--)
 		{
-			Joueur temp = fileJoueurs.get(j-1);
-			xx = temp.getPosX();
-			yy = temp.getPosY();
-			id =  Character.forDigit(temp.getIdJoueur(), 10);
+			Joueur tempJ =(Joueur) fileJoueurs.get(j);
+			xx = tempJ.getPosX();
+			yy = tempJ.getPosY();
+			id =  tempJ.getIdJoueur();
 			carte[xx][yy] = id;
 		}
+		xx=joueurCourant.getPosX();
+		yy=joueurCourant.getPosY();
+		id =  joueurCourant.getIdJoueur();
+		carte[xx][yy] = id;
 		
 		//affichage
 		System.out.println("----------Carte----------");
-		for (int x=0; x<12; x++)
+		for (int x=0; x<nMap; x++)
 		{
-			for (int y=0; y<12; y++)
+			for (int y=0; y<nMap; y++)
 			{
 				System.out.print(carte[x][y]);
 			}
@@ -474,28 +603,29 @@ public boolean charger()
 		boolean defaite=false;
 		while(victoire==false || defaite==false)
 		{
+			if(fileJoueurs.size()==0)
+			{
+				//Si plus aucuns joueurs dans la file de joueurs défaite
+				defaite=true;
+			}
 			for(int i=0; i<fileJoueurs.size(); i++)
 			{
 				joueurCourant=fileJoueurs.pollFirst();
-				if(joueurCourant==null)
+				
+				victoire=tourJoueur();
+				if(victoire)
 				{
-					//Si plus aucuns joueurs dans la file de joueurs défaite
-					defaite=true;
 					break;
+				}
+				if(joueurCourant!=null)
+				{
+					//Si le jouer a survécu à son tour (n'est pas mort pendant son combat)
+					//On le replace à la fin de la file de joueurs
+					fileJoueurs.addLast(joueurCourant);
 				}
 				else
 				{
-					victoire=tourJoueur();
-					if(victoire)
-					{
-						break;
-					}
-					if(joueurCourant!=null)
-					{
-						//Si le jouer a survécu à son tour (n'est pas mort pendant son combat)
-						//On le replace à la fin de la file de joueurs
-						fileJoueurs.addLast(joueurCourant);
-					}
+					i=i-1;
 				}
 			}
 			if(victoire || defaite)
@@ -506,6 +636,7 @@ public boolean charger()
 			for(int j=0; j<filePirates.size(); j++)
 			{
 				pirateCourant=filePirates.pollFirst();
+				//System.out.println("tour du pirate:" + pirateCourant.toString());
 				if(pirateCourant!=null)
 				{
 					//Si il reste des pirates,
@@ -517,8 +648,13 @@ public boolean charger()
 						//Si le pirateCourant n'as pas été supprimé, il est rajouté en fin de file.
 						filePirates.addLast(pirateCourant);
 					}
+					else
+					{
+						j=j-1;
+					}
 				}
 			}
+			nTour++;
 		}
 		
 		if(defaite)
@@ -533,11 +669,30 @@ public boolean charger()
 
 	public void tourPirate()
 	{
-		pirateCourant.deplacer();
-		boolean vivant=pirateCourant.attaquer(fileJoueurs);
+		Boucanier tmpB;
+		Flibustier tmpF;
+		boolean vivant=true;
+		pirateCourant.deplacer(nMap);
+		if(pirateCourant instanceof Boucanier)
+		{
+			tmpB=(Boucanier) pirateCourant;
+			//System.out.println("pirate combat Bouc?");
+			vivant=tmpB.attaquer(fileJoueurs, nTour);
+			//System.out.println("pirate fin combatBouc2?");
+			
+		}
+		else if(pirateCourant instanceof Flibustier)
+		{
+			tmpF=(Flibustier) pirateCourant;
+			//System.out.println("pirate combat Flib?");
+			vivant=tmpF.attaquer(fileJoueurs, nTour);
+			//System.out.println("pirate fin combat Flib2?");
+		}
+		
 		if(vivant == false)
 		{
 			//Si le pirate est mort lors du combat, on suprime le pirate courant
+			System.out.println("Pirate mort");
 			pirateCourant=null;
 		}
 		return;
@@ -547,29 +702,33 @@ public boolean charger()
 	{
 		//Retourne true si victoire, false sinon
 			//Déplacement
+
+		boolean deplacer=false;
+		afficherCarte();
+
 		Scanner saisie = new Scanner(System.in);
-		System.out.println("Choisissez une direction 1 2 3 4 6 7 8 9 s q");
-		String choix=saisie.nextLine();
-		if(choix=="s")
+		while(deplacer==false)
 		{
-			boolean saveValide=sauvegarde();
-		}
-		while(!joueurCourant.deplacer(Integer.parseInt(choix)))
-		{
+			System.out.println("Au tour du joueur: " + joueurCourant.getIdJoueur());
+			joueurCourant.afficheEquipement();
 			System.out.println("Choisissez une direction 1 2 3 4 6 7 8 9 s q");
-			choix=saisie.nextLine();
-			if(choix=="s")
+			String choix=saisie.nextLine();
+			if(choix.equals("s"))
 			{
 				boolean saveValide=sauvegarde();
 			}
-			/*else if(choix=="q")
+			else if(choix.equals("q"))
 			{
-
-			}*/
+				System.exit(0);
+			}
+			else if(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4") || choix.equals("6") || choix.equals("7") || choix.equals("8") || choix.equals("9"))
+			{
+				deplacer=joueurCourant.deplacer(Integer.parseInt(choix), nMap);
+			}
 		}
 
 			//Combat
-		boolean vivant=joueurCourant.combat(filePirates);
+		boolean vivant=joueurCourant.combat(filePirates, nTour);
 		if(vivant==false)
 		{
 			joueurCourant=null;
