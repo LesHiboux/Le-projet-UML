@@ -11,7 +11,8 @@ public class tresureHunter
 	public static void main(String[] args)
 	{
 		Partie p=new Partie();
-		Coffre coffreCourant;
+		p.deroulePartie();
+		/*Coffre coffreCourant;
 		LinkedList<Coffre> lC=new LinkedList<Coffre>();
 		Coffre c1=new Coffre(2, 2, true, false, false);
 		Coffre c2 = new Coffre(0, 0, false, true, false);
@@ -50,6 +51,6 @@ public class tresureHunter
 		{
 			coffreCourant =lC.get(i);
 			System.out.println(coffreCourant.toString());
-		}
+		}*/
 	}
 }

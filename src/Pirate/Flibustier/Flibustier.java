@@ -1,3 +1,4 @@
+import java.util.*;
 public class Flibustier extends Pirate {
 
 	public Flibustier(String strFlib)
@@ -17,37 +18,44 @@ public class Flibustier extends Pirate {
 	public boolean combat(LinkedList<Joueur> fileJoueurs, Joueur j) {//déroulé du combat
 		Random x = new Random();
 		int jet = x.nextInt(10)+1;
-		System.out.println("le joueur "+j.getIdJoueur()+"est attaqué par un flibustier")
+		System.out.println("le joueur "+j.getIdJoueur()+"est attaqué par un flibustier");
 		if (j.getArmure()==true) {
 			if (j.getMousquet()==true) {
-				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier")
+				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier");
 				return false;
 			}
 			if (jet==10) {
-				System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier")
-				fileJoueurs.remove(i);
+				System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier");
+				fileJoueurs.remove(j);
 				return true;
 			}
-			System.out.println("le joueur "+j.getIdJoueur()+"survit")
+			System.out.println("le joueur "+j.getIdJoueur()+"survit");
 			return true;
 		}
-		if (j.getMousquet()==1) {
+		if (j.getMousquet()==true) {
 			if (jet<=5) {
-				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier")
+				System.out.println("le joueur "+j.getIdJoueur()+"tue le flibustier");
 				return false;
 			}
 		}
-		System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier")
+		System.out.println("le joueur "+j.getIdJoueur()+"est décapité par le flibustier");
 		fileJoueurs.remove(j);
+		j=null;
 		return true;
 	}
+
+	/*public void deplacer()
+	{
+		super();
+	}*/
 	
-	public boolean attaquer(LinkedList<Joueur> fileJoueurs) {
-		joueur j;
-		for (int i=0;i<=fileJoueurs.size();i++) {
-			j=fileJoueurs.get(i);
-		}
-		if (j.getPosX()==this.posX && j.getPosY()==this.posY) {
+	public boolean attaquer(LinkedList<Joueur> fileJoueurs, int nTour) {
+		Joueur j=new Joueur(0,0,0);
+		if (nTour==1) return true;
+		for (int i=0;i<fileJoueurs.size();i++) {
+			j=(Joueur) fileJoueurs.get(i);
+		
+			if (j.getPosX()==this.posX && j.getPosY()==this.posY) {
 				if (combat(fileJoueurs,j)==false) return false; 
 			}
 			else {
@@ -55,5 +63,11 @@ public class Flibustier extends Pirate {
 					if (combat(fileJoueurs,j)==false) return false;
 				}
 			}
+			if(j==null)
+			{
+				i--;
+			}
+		}
+		return true;
 	}
 }

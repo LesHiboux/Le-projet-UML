@@ -151,9 +151,9 @@ public class Joueur
 		return this.posY;
 	}
 
-	public int getIdJoueur()
+	public char getIdJoueur()
 	{
-		return this.idJoueur;
+		return Character.forDigit(idJoueur, 10);
 	}
 
 	public boolean getPelle()
@@ -216,7 +216,7 @@ public class Joueur
 	}
 
 	//------------Fonctions--------//
-	public boolean deplacer(int choix)
+	public boolean deplacer(int choix, int n)
 	{
 		//choix = 1, 2, 3, 4, 6, 7, 8, 9
 		//bas-gauche, bas, bas-droite, gauche, droite, haut-gauche, haut, haut-droite
@@ -231,29 +231,29 @@ public class Joueur
 		{
 			case 1:
 			{
-				if(posX-1<0 || posY+1>11)
+				if(posY-1<0 || posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posX=posX-1;
-					posY=posY+1;
+					posY=posY-1;
+					posX=posX+1;
 					return true;
 				}
 			}
 
 			case 2:
 			{
-				if(posY+1>11)
+				if(posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posY=posY+1;
+					posX=posX+1;
 					return true;
 				}
 
@@ -261,63 +261,20 @@ public class Joueur
 
 			case 3:
 			{
-				if(posX+1>11 || posY+1>11)
+				if(posY+1>11 || posX+1>n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posX=posX+1;
 					posY=posY+1;
+					posX=posX+1;
 					return true;
 				}
 			}
 
 			case 4:
-			{
-				if(posX-1 < 0)
-				{
-					System.out.println("Déplacement impossible");
-					return false;
-				}
-				else
-				{
-					posX=posX-1;
-					return true;
-				}
-			}
-
-			case 6:
-			{
-				if(posX+1 > 11)
-				{
-					System.out.println("Déplacement impossible");
-					return false;
-				}
-				else
-				{
-					posX=posX+1;
-					return true;
-				}
-			}
-
-			case 7:
-			{
-				if(posX-1 <0 || posY-1 <0)
-				{
-					System.out.println("Déplacement impossible");
-					return false;
-				}
-				else
-				{
-					posX = posX-1;
-					posY=posY-1;
-					return true;
-				}
-			}
-
-			case 8:
 			{
 				if(posY-1 < 0)
 				{
@@ -331,17 +288,60 @@ public class Joueur
 				}
 			}
 
-			case 9:
+			case 6:
 			{
-				if(posX+1>11 || posY-1<0)
+				if(posY+1 > n-1)
 				{
 					System.out.println("Déplacement impossible");
 					return false;
 				}
 				else
 				{
-					posX=posX+1;
-					posY=posY-1;
+					posY=posY+1;
+					return true;
+				}
+			}
+
+			case 7:
+			{
+				if(posY-1 <0 || posX-1 <0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posY = posY-1;
+					posX=posX-1;
+					return true;
+				}
+			}
+
+			case 8:
+			{
+				if(posX-1 < 0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posX=posX-1;
+					return true;
+				}
+			}
+
+			case 9:
+			{
+				if(posY+1>n-1 || posX-1<0)
+				{
+					System.out.println("Déplacement impossible");
+					return false;
+				}
+				else
+				{
+					posY=posY+1;
+					posX=posX-1;
 					return true;
 				}
 			}
@@ -352,11 +352,11 @@ public class Joueur
 				return false;
 			}
 		}
+
 	}
 
 	public void ouvrirCoffre(LinkedList<Coffre> listeCoffres)
 	{
-		System.out.println("Liste Coffres");
 		Coffre coffreCourant;
 		int cPosX, cPosY;
 		boolean cPelle, cArmure, cMousquet;
@@ -365,7 +365,7 @@ public class Joueur
 			coffreCourant=listeCoffres.get(i);
 			cPosX=coffreCourant.getPosX();
 			cPosY=coffreCourant.getPosY();
-			System.out.println(coffreCourant.toString());
+			//System.out.println(coffreCourant.toString());
 			if(this.posX==cPosX && this.posY==cPosY)
 			{
 				//On regarde le contenu du coffre que si il est sur le même case que le joueur
@@ -425,6 +425,7 @@ public class Joueur
 			pPosY=pirateCourant.getPosY();
 			if((this.posX == pPosX-1 && this.posY == pPosY-1) || (this.posX == pPosX && this.posY == pPosY-1) || (this.posX == pPosX+1 && this.posY == pPosY-1) || (this.posX == pPosX-1 && this.posY == pPosY) || (this.posX==pPosX && this.posY==pPosY) || (this.posX == pPosX+1 && this.posY == pPosY) || (this.posX == pPosX-1 && this.posY == pPosY+1) || (this.posX == pPosX && this.posY == pPosY+1) || (this.posX == pPosX+1 && this.posY == pPosY+1))
 			{
+				System.out.println("Combat joueur: "+ this.toString() + " vs: " + pirateCourant.toString());
 				Random x=new Random();		//Génération d'un nombre aléatoire
 				int jet=x.nextInt(10)+1;	//entre 1(inclu) et 10 -> 11(exclu)
 				//Si le pirate est proche du joueur
@@ -439,6 +440,7 @@ public class Joueur
 							//Si le perso a l'armure et le mousquet, il gagne -> pirate mort, joueur vivant
 							//Affiche joueur a tué le boucanier
 							filePirates.remove(i);
+							pirateCourant=null;
 						}
 						else
 						{
@@ -447,6 +449,7 @@ public class Joueur
 							{
 								//Affiche joueur a tué le boucanier
 								filePirates.remove(i);
+								pirateCourant=null;
 							}
 							else
 							{
@@ -505,6 +508,7 @@ public class Joueur
 						{
 							//Affiche joueur a tué le flibustier
 							filePirates.remove(i);
+							pirateCourant=null;
 						}
 						else
 						{
@@ -519,6 +523,10 @@ public class Joueur
 						filePirates.remove(i);
 					}
 				}
+			}
+			if(pirateCourant==null)
+			{
+				i--;
 			}
 		}
 		//Le joueur a survécu à toutes les attaques de pirates.

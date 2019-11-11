@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.*;
 import java.io.*;
 
-public class Partie
+public class Partie implements Affichage
 {
 
 	//Attributs
@@ -15,17 +15,12 @@ public class Partie
 	private LinkedList<Pirate> filePirates;
 	private int nbPirates;
 	private Pirate pirateCourant;
-	private Flibustier flibCourant;
-	private Boucanier boucCourant;
-	
 
 	private LinkedList<Coffre> listeCoffres;
 	private int nbCoffres;
 
 	private int tresorPosX;
 	private int tresorPosY;
-
-	private int n=12;
 
 	//Fonctions
 	public Partie()
@@ -38,13 +33,13 @@ public class Partie
 		//Inputs
 		Scanner saisie = new Scanner(System.in);
 		int askJoueur = 0;
-		while (askJoueur < 1)
+		while (askJoueur < 1)		//Mauvaise vérif...
 		{
 			System.out.println("combien de joueur ?");
 			askJoueur = Integer.parseInt(saisie.nextLine());			
 		}
 		int askPirate = -1;
-		while (askPirate < 0)
+		while (askPirate < 0)	//Mauvaise vérif...
 		{
 			System.out.println("combien de pirate ?");
 			askPirate = Integer.parseInt(saisie.nextLine());			
@@ -57,7 +52,7 @@ public class Partie
 		Pair nul = new Pair(-1, -1);
 		coords.add(nul);
 			//Players
-		while (askJoueur != 0)
+		while (askJoueur != 0)	//Mauvaise vérif...
 		{
 			int nx = -1; int ny = -1;
 			Pair ncoord = new Pair(nx, ny);
@@ -70,7 +65,6 @@ public class Partie
 
 			}
 			Joueur nJoueur = new Joueur(askJoueur, ncoord.getX(), ncoord.getY());
-			System.out.println("condtr joueur" + nJoueur.getIdJoueur());
 			coords.add(ncoord);
 			fileJoueurs.addFirst(nJoueur);
 			askJoueur = askJoueur-1;
@@ -89,7 +83,7 @@ public class Partie
 
 			}
 			Random FouB = new Random();
-			int yolo = FouB.nextInt(2);
+			int yolo = FouB.nextInt(1);
 			switch (yolo)
 			{
 				case 0:
@@ -97,16 +91,14 @@ public class Partie
 					Pirate nPirate = new Boucanier(ncoord.getX(), ncoord.getY());
 					coords.add(ncoord);
 					filePirates.addFirst(nPirate);
-					System.out.println("Constr Bouc" + nPirate.toString());
-					break;
+
 				}
 				case 1:
 				{
 					Pirate nPirate = new Flibustier(ncoord.getX(), ncoord.getY());
 					coords.add(ncoord);
 					filePirates.addFirst(nPirate);
-					System.out.println("Constr Flib" + nPirate.toString());
-					break;
+
 				}
 			}
 			askPirate = askPirate-1;
@@ -157,7 +149,7 @@ public class Partie
 
 
 //------------------Partie Delfeil---------------------------------//
-/*public boolean charger()
+public boolean charger()
 	{
 		//Récupération du dossier de sauvegarde
 		String nomSave;
@@ -399,7 +391,7 @@ public class Partie
 		pWriter.println(tresorPosX + "|" + tresorPosY + "|");
 		pWriter.close();
 		return true;
-	}*/
+	}
 
 //------------------ Fin Partie Delfeil---------------------------------//
 	
@@ -414,56 +406,48 @@ public class Partie
 		
 	}
 
-	public void afficherCarte()
+	public void afficherCarte(LinkedList fileJoueurs, LinkedList filePirates, LinkedList fileCoffres)
 	{
 		//generation de la carte a afficher
-		char carte[][] = { {'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'},
-					{'+','+','+','+','+','+','+','+','+','+','+','+'} };
-		char id;
+		char carte[][] = new char[12][12];
+		int id;
 		int xx;
 		int yy;
 		
-		for (int c = listeCoffres.size()-1; c>=0; c--)
+		for (int c = nbCoffres; c!=0; c--)
 		{
-			Coffre tempC = listeCoffres.get(c);
-			xx = tempC.getPosX();
-			yy = tempC.getPosY();
+			Coffre temp = listeCoffres.get(c-1);
+			xx = temp.getPosX();
+			yy = temp.getPosY();
 			carte[xx][yy] = 'C';
 		}
 		
-		for (int p = filePirates.size()-1; p>=0; p--)
+		for (int p = nbPirates; p!=0; p--)
 		{
-			Pirate tempP = (Pirate) filePirates.get(p);
-			xx = tempP.getPosX();
-			yy = tempP.getPosY();
-			if (tempP instanceof Boucanier) id = 'B';
+			Pirate temp = filePirates.get(p-1);
+			xx = temp.getPosX();
+			yy = temp.getPosY();
+			if (temp instanceof Boucanier) id = 'B';
 			else id = 'F';
 			carte[xx][yy] = id;
 		}
 		
-		for (int j = fileJoueurs.size()-1; j>=0; j--)
+		for (int j = nbJoueurs; j!=0; j--)
 		{
-			Joueur tempJ =(Joueur) fileJoueurs.get(j);
-			xx = tempJ.getPosX();
-			yy = tempJ.getPosY();
-			id =  tempJ.getIdJoueur();
+			Joueur temp = fileJoueurs.get(j-1);
+			xx = temp.getPosX();
+			yy = temp.getPosY();
+			id =  Character.forDigit(temp.getIdJoueur(), 10);
 			carte[xx][yy] = id;
 		}
-		xx=joueurCourant.getPosX();
-		yy=joueurCourant.getPosY();
-		id =  joueurCourant.getIdJoueur();
-		carte[xx][yy] = id;
 		
+		for (int x=0; x<12; x++)
+		{
+			for (int y=0; y<12; y++)
+			{
+				if (carte[x][y] == '') carte[x][y] = '+';
+			}
+		}
 		//affichage
 		System.out.println("----------Carte----------");
 		for (int x=0; x<12; x++)
@@ -486,29 +470,28 @@ public class Partie
 		boolean defaite=false;
 		while(victoire==false || defaite==false)
 		{
-			if(fileJoueurs.size()==0)
-			{
-				//Si plus aucuns joueurs dans la file de joueurs défaite
-				defaite=true;
-			}
 			for(int i=0; i<fileJoueurs.size(); i++)
 			{
 				joueurCourant=fileJoueurs.pollFirst();
-				
-				victoire=tourJoueur();
-				if(victoire)
+				if(joueurCourant==null)
 				{
+					//Si plus aucuns joueurs dans la file de joueurs défaite
+					defaite=true;
 					break;
-				}
-				if(joueurCourant!=null)
-				{
-					//Si le jouer a survécu à son tour (n'est pas mort pendant son combat)
-					//On le replace à la fin de la file de joueurs
-					fileJoueurs.addLast(joueurCourant);
 				}
 				else
 				{
-					i=i-1;
+					victoire=tourJoueur();
+					if(victoire)
+					{
+						break;
+					}
+					if(joueurCourant!=null)
+					{
+						//Si le jouer a survécu à son tour (n'est pas mort pendant son combat)
+						//On le replace à la fin de la file de joueurs
+						fileJoueurs.addLast(joueurCourant);
+					}
 				}
 			}
 			if(victoire || defaite)
@@ -519,7 +502,6 @@ public class Partie
 			for(int j=0; j<filePirates.size(); j++)
 			{
 				pirateCourant=filePirates.pollFirst();
-				System.out.println("tour du pirate:" + pirateCourant.toString());
 				if(pirateCourant!=null)
 				{
 					//Si il reste des pirates,
@@ -530,10 +512,6 @@ public class Partie
 					{
 						//Si le pirateCourant n'as pas été supprimé, il est rajouté en fin de file.
 						filePirates.addLast(pirateCourant);
-					}
-					else
-					{
-						j=j-1;
 					}
 				}
 			}
@@ -551,30 +529,11 @@ public class Partie
 
 	public void tourPirate()
 	{
-		Boucanier tmpB;
-		Flibustier tmpF;
-		boolean vivant=true;
 		pirateCourant.deplacer();
-		if(pirateCourant instanceof Boucanier)
-		{
-			tmpB=(Boucanier) pirateCourant;
-			System.out.println("pirate combat Bouc?");
-			vivant=tmpB.attaquer(fileJoueurs);
-			System.out.println("pirate fin combatBouc2?");
-			
-		}
-		else if(pirateCourant instanceof Flibustier)
-		{
-			tmpF=(Flibustier) pirateCourant;
-			System.out.println("pirate combat Flib?");
-			vivant=tmpF.attaquer(fileJoueurs);
-			System.out.println("pirate fin combat Flib2?");
-		}
-		
+		boolean vivant=pirateCourant.attaquer(fileJoueurs);
 		if(vivant == false)
 		{
 			//Si le pirate est mort lors du combat, on suprime le pirate courant
-			System.out.println("Pirate mort");
 			pirateCourant=null;
 		}
 		return;
@@ -584,27 +543,25 @@ public class Partie
 	{
 		//Retourne true si victoire, false sinon
 			//Déplacement
-		boolean deplacer=false;
-		afficherCarte();
 		Scanner saisie = new Scanner(System.in);
-		while(deplacer==false)
+		System.out.println("Choisissez une direction 1 2 3 4 6 7 8 9 s q");
+		String choix=saisie.nextLine();
+		if(choix=="s")
+		{
+			boolean saveValide=sauvegarde();
+		}
+		while(!joueurCourant.deplacer(Integer.parseInt(choix)))
 		{
 			System.out.println("Choisissez une direction 1 2 3 4 6 7 8 9 s q");
-			String choix=saisie.nextLine();
-			System.out.println(choix);
-			/*if(choix=="s")
+			choix=saisie.nextLine();
+			if(choix=="s")
 			{
 				boolean saveValide=sauvegarde();
-			}*/
+			}
 			/*else if(choix=="q")
 			{
 
 			}*/
-			if(choix.equals("1") || choix.equals("2") || choix.equals("3") || choix.equals("4") || choix.equals("6") || choix.equals("7") || choix.equals("8") || choix.equals("9"))
-			{
-				System.out.println("la");
-				deplacer=joueurCourant.deplacer(Integer.parseInt(choix), n);
-			}
 		}
 
 			//Combat

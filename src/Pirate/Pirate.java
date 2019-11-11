@@ -1,7 +1,7 @@
-import java.util.Random;
+import java.util.*;
 public class Pirate {
-	private int posX;
-	private int posY;
+	protected int posX;
+	protected int posY;
 
 	public Pirate (int x, int y) {
 		posX=x;
@@ -21,7 +21,8 @@ public class Pirate {
 			posSuiv=strPirate.indexOf("|", pos+1);
 			if (posSuiv==-1)
 			{
-				throw new JoueurException("Erreur de construction", this);
+				System.out.println("erreur");
+				//throw new PirateException("Erreur de construction", this);
 			}
 			if(compt==0)
 			{
@@ -46,7 +47,8 @@ public class Pirate {
 					}
 					catch(NumberFormatException e)
 					{
-						throw new PirateException("Erreur de construction", this);
+						System.out.println("erreur");
+						//throw new PirateException("Erreur de construction", this);
 					}
 					compt++;
 					break;
@@ -59,7 +61,8 @@ public class Pirate {
 					}
 					catch(NumberFormatException e)
 					{
-						throw new PirateException("Erreur de construction", this);
+						System.out.println("erreur");
+						//throw new PirateException("Erreur de construction", this);
 					}
 					compt++;
 					break;
@@ -68,7 +71,7 @@ public class Pirate {
 		}
 	}
 
-	abstract public String toString();
+	//public String toString(){}
 	
 	public int getPosX() {
 		return this.posX;
@@ -101,42 +104,47 @@ public class Pirate {
 		return false;
 	}	
 	public void deplacer() {
-		int posX2;
-		int posY2;
+		int posX2=posX;
+		int posY2=posY;
 		boolean valide = false;
 		//deplacement aleatoire
 		while (valide == false) {
-			valid==true;
+
+			valide=true;
 			Random x = new Random();
 			int direction = x.nextInt(9)+1;
 			switch(direction) {
-				case 1: posX2=posX+1;
-					posY2=posY-1;
-				case 2:
+				case 1:
+				{
 					posX2=posX+1;
+					posY2=posY-1;
+					break;
+				}
+				case 2:
+					posX2=posX+1; break;
 				case 3:
 					posX2=posX+1;
-					posY2=posY+1;
+					posY2=posY+1; break;
 				case 4:
-					posY2=posY-1;
+					posY2=posY-1; break;
 				case 5:
-					valide=false;
+					valide=false; break;
 				case 6:
-					posY2=posY+1;
+					posY2=posY+1; break;
 				case 7:
 					posX2=posX-1;
-					posY2=posY-1;
+					posY2=posY-1; break;
 				case 8:
-					posX2=posX-1;
+					posX2=posX-1; break;
 				case 9:
 					posX2=posX-1;
-					posY2=posY+1;
+					posY2=posY+1; break;
 
 			}
 			//vérification direction non hors map
-			if (posX2>=12 || posX2<0 || posY2>=12 || posY2<0) { 
+			if (posX2>=n || posX2<0 || posY2>=n || posY2<0) { 
 				valide=false;
-				posX2=posX:
+				posX2=posX;
 				posY2=posY;
 			}
 		}
@@ -145,5 +153,5 @@ public class Pirate {
 		posY=posY2;	  
 	}
 
-	abstract public void attaquer();
+	//public boolean attaquer(LinkedList<Joueur> fileJoueurs){}
 }
